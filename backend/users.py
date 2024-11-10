@@ -36,6 +36,16 @@ def get_user_by_id(user_id):
     connection.close()
     return user_to_json(user) if user else None
 
+def login(username, password):
+    connection = get_db_connection()
+    cursor = connection.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM user WHERE Username = %s AND Password = %s ", (username, password))
+    user = cursor.fetchone()
+    cursor.close()
+    connection.close()
+
+    return user_to_json(user) if user else None
+
 def update_user(user_id, username=None, email=None, password=None):
     connection = get_db_connection()
     cursor = connection.cursor()
