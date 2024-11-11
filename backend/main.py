@@ -3,17 +3,18 @@ from users import *
 
 app = Flask(__name__)
 
-@app.route('/users', methods=['POST'])
+@app.route('/register', methods=['POST'])
 def api_create_user():
     data = request.json
-    username = data.get('Username')
+    name = data.get('Name')
     email = data.get('Email')
     password = data.get('Password')
+    phone = data.get('Phone')
     
-    if not all([username, email, password]):
+    if not all([name, email, password, phone]):
         return jsonify({"error": "Missing required information"}), 400
 
-    create_user(username, email, password)
+    create_user(name, email, password, phone)
     return jsonify({"message": "User successfully created"}), 201
 
 @app.route('/users', methods=['GET'])
@@ -32,14 +33,15 @@ def api_get_user_by_id(user_id):
 @app.route('/users/<int:user_id>', methods=['PUT'])
 def api_update_user(user_id):
     data = request.json
-    username = data.get('Username')
+    name = data.get('Name')
     email = data.get('Email')
     password = data.get('Password')
+    phone = data.get('Phone')
 
-    if not any([username, email, password]):
+    if not any([name, email, password, phone]):
         return jsonify({"error": "No information to update"}), 400
 
-    update_user(user_id, username=username, email=email, password=password)
+    update_user(user_id, name=name, email=email, password=password, phone=phone)
     return jsonify({"message": "User information successfully updated"}), 200
 
 @app.route('/users/<int:user_id>', methods=['DELETE'])
@@ -50,17 +52,17 @@ def api_delete_user(user_id):
 @app.route('/login', methods=['POST'])
 def api_login():
     data = request.json
-    username = data.get('Username')
+    email = data.get('Email')
     password = data.get('Password')
 
-    if not username or not password:
-        return jsonify({"error": "Missing username or password"}), 400
+    if not email or not password:
+        return jsonify({"error": "Missing email or password"}), 400
 
-    user = login(username, password)
+    user = login(email, password)
     if user:
         return jsonify(user), 200
     else:
-        return jsonify({"error": "Wrong username or password"}), 404
+        return jsonify({"error": "Wrong email or password"}), 404
 
 if __name__ == '__main__':
     app.run(debug=True)

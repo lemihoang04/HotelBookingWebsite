@@ -4,16 +4,17 @@ from datetime import datetime
 def user_to_json(user_data):
     return {
         "UserID": user_data['UserID'],
-        "Username": user_data['Username'],
+        "Name": user_data['Name'],
         "Email": user_data['Email'],
+        "Phone": user_data['Phone'],
         "CreatedAt": user_data['CreatedAt'].isoformat(),
     }
 
-def create_user(username, email, password):
+def create_user(name, email, password, phone):
     connection = get_db_connection()
     cursor = connection.cursor()
-    sql = "INSERT INTO user (Username, Email, Password, CreatedAt) VALUES (%s, %s, %s, %s)"
-    cursor.execute(sql, (username, email, password, datetime.utcnow()))
+    sql = "INSERT INTO user (Name, Email, Password, Phone, CreatedAt) VALUES (%s, %s, %s, %s, %s)"
+    cursor.execute(sql, (name, email, password, phone, datetime.utcnow()))
     connection.commit()
     cursor.close()
     connection.close()
@@ -36,31 +37,34 @@ def get_user_by_id(user_id):
     connection.close()
     return user_to_json(user) if user else None
 
-def login(username, password):
+def login(email, password):
     connection = get_db_connection()
     cursor = connection.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM user WHERE Username = %s AND Password = %s ", (username, password))
+    cursor.execute("SELECT * FROM user WHERE Email = %s AND Password = %s", (email, password))
     user = cursor.fetchone()
     cursor.close()
     connection.close()
 
     return user_to_json(user) if user else None
 
-def update_user(user_id, username=None, email=None, password=None):
+def update_user(user_id, name=None, email=None, password=None, phone=None):
     connection = get_db_connection()
     cursor = connection.cursor()
     updates = []
     values = []
 
-    if username:
-        updates.append("Username = %s")
-        values.append(username)
+    if name:
+        updates.append("Name = %s")
+        values.append(name)
     if email:
         updates.append("Email = %s")
         values.append(email)
     if password:
         updates.append("Password = %s")
         values.append(password)
+    if phone:
+        updates.append("Phone = %s")
+        values.append(phone)
 
     values.append(user_id)
     sql = f"UPDATE user SET {', '.join(updates)} WHERE UserID = %s"
