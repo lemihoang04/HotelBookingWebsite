@@ -64,5 +64,6 @@ def api_login():
     else:
         return jsonify({"error": "Wrong email or password"}), 404
 
+
 if __name__ == '__main__':
     app.run(debug=True)
