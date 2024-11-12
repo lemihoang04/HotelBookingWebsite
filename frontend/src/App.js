@@ -1,5 +1,5 @@
 import { Fragment, useContext, useEffect, useState } from "react";
-import "./App.css";
+
 import { BrowserRouter as Router } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -7,9 +7,15 @@ import NavBar from "./Component/NavBar/NavBar";
 import { Oval } from "react-loader-spinner";
 import Footer from "./Component/Footer/Footer";
 import ClientRoute from "./Routers/ClientRoute";
+import "../src/assets/css/bootstrap.min.css";
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/js/bootstrap.js';
+import "./App.css";
+
+
 function App() {
 	return (
-		<Fragment>
+		<>
 			<Router>
 				{/* {user && user.isLoading ? (
 					<div className="loading-container">
@@ -50,7 +56,7 @@ function App() {
 				pauseOnHover
 				theme="light"
 			/>
-		</Fragment>
+		</>
 	);
 }
 

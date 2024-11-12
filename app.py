@@ -9,7 +9,7 @@ def get_db_connection():
         host='localhost',
         user='root',
         password='',
-        database='hotelmanager'
+        database='bookinghotel'
     )
     return connection
 
@@ -17,22 +17,22 @@ def get_db_connection():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        username = request.form['username']
+        username = request.form['email']
         password = request.form['password']
         
         connection = get_db_connection()
         cursor = connection.cursor(dictionary=True)
         
 
-        cursor.execute('SELECT * FROM user WHERE username = %s AND password = %s', (username, password))
+        cursor.execute('SELECT * FROM user WHERE email = %s AND password = %s', (username, password))
         user = cursor.fetchone()
         
         cursor.close()
         connection.close()
         
         if user:
-            session['user_id'] = user['id']
-            session['username'] = user['username']
+            session['user_id'] = user['UserID']
+            session['Email'] = user['Email']
             return redirect(url_for('index'))  
         else:
             flash('Invalid username or password')  

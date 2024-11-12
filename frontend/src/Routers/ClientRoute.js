@@ -1,6 +1,7 @@
 import React from "react";
 
 import Home from "../pages/Home/Home";
+import Room from "../pages/Room/Room";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Login from "../Component/Login/Login";
 import Register from "../Component/Register/Register";
@@ -27,7 +28,7 @@ const ClientRoute = () => {
 				</Route>
 				<Route path="/users">users</Route>
 				<Route path="/" exact>
-					<Home />
+					<Room />
 				</Route>
 				<Route path="*">404 Not Found</Route>
 			</Switch>
