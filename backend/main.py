@@ -1,13 +1,14 @@
 from flask import Flask, jsonify, request
 from users import *
-from flask_cors import CORS,cross_origin
+from flask_cors import CORS
 from room import *
 from hotel import *
 from review import *
 from payment import *
 from booking import *
 app = Flask(__name__)
-CORS(app, support_credentials=True)
+CORS(app, origins="http://localhost:3000", supports_credentials=True)
+
 @app.route('/register', methods=['POST'])
 def api_create_user():
     data = request.json
@@ -53,13 +54,13 @@ def api_update_user(user_id):
 def api_delete_user(user_id):
     delete_user(user_id)
     return jsonify({"message": "User has been deleted"}), 200
-
-@app.route('/login', methods=['POST'])
+@app.route('/login',  methods=['POST'])
 def api_login():
     data = request.form
+    print("Received data:", data) 
     email = data.get('Email')
     password = data.get('Password')
-
+    print(f"Email: {email}, Password: {password}") 
     if not email or not password:
         return jsonify({"error": "Missing email or password"}), 400
 
