@@ -7,7 +7,6 @@ import NavBar from "./Component/NavBar/NavBar";
 import { Oval } from "react-loader-spinner";
 import Footer from "./Component/Footer/Footer";
 import ClientRoute from "./Routers/ClientRoute";
-
 function App() {
 	return (
 		<Fragment>

@@ -1,8 +1,8 @@
 from flask import Flask, jsonify, request
 from users import *
-
+from flask_cors import CORS,cross_origin
 app = Flask(__name__)
-
+CORS(app, support_credentials=True)
 @app.route('/register', methods=['POST'])
 def api_create_user():
     data = request.json
@@ -51,7 +51,7 @@ def api_delete_user(user_id):
 
 @app.route('/login', methods=['POST'])
 def api_login():
-    data = request.json
+    data = request.form
     email = data.get('Email')
     password = data.get('Password')
 
@@ -60,7 +60,7 @@ def api_login():
 
     user = login(email, password)
     if user:
-        return jsonify(user), 200
+        return jsonify({"errCode":0,"user": user}), 200
     else:
         return jsonify({"error": "Wrong email or password"}), 404
 

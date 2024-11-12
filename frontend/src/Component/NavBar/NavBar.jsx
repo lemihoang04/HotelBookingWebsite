@@ -1,61 +1,102 @@
 import React from "react";
 import "../../assets/css/style.css";
+import { NavLink, useLocation } from "react-router-dom";
+
 const NavBar = () => {
+	const location = useLocation();
+
 	return (
-		<div class="menu-item">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-2">
-						<div class="logo">
-							<a href="./index.html">{/* <img src="img/logo.png" alt=""> */}</a>
-						</div>
-					</div>
-					<div class="col-lg-10">
-						<div class="nav-menu">
-							<nav class="mainmenu">
-								<ul>
-									<li class="active">
-										<a href="./index.html">Home</a>
-									</li>
-									<li>
-										<a href="./rooms.html">Rooms</a>
-									</li>
-									<li>
-										<a href="./about-us.html">About Us</a>
-									</li>
-									<li>
-										<a href="./pages.html">Pages</a>
-										<ul class="dropdown">
+		<>
+			{location.pathname === "/login" || location.pathname === "/register" ? (
+				<></>
+			) : (
+				<div className="menu-item">
+					<div className="container">
+						<div className="row">
+							<div className="col-lg-2">
+								<div className="logo">
+									<NavLink to="/">
+										{/* <img src="img/logo.png" alt="Logo" /> */}
+									</NavLink>
+								</div>
+							</div>
+							<div className="col-lg-10">
+								<div className="nav-menu">
+									<nav className="mainmenu">
+										<ul>
 											<li>
-												<a href="./room-details.html">Room Details</a>
+												<NavLink to="/" exact activeClassName="active">
+													Home
+												</NavLink>
 											</li>
 											<li>
-												<a href="./blog-details.html">Blog Details</a>
+												<NavLink to="/rooms" activeClassName="active">
+													Rooms
+												</NavLink>
 											</li>
 											<li>
-												<a href="#">Family Room</a>
+												<NavLink to="/about-us" activeClassName="active">
+													About Us
+												</NavLink>
 											</li>
 											<li>
-												<a href="#">Premium Room</a>
+												<NavLink to="/pages" activeClassName="active">
+													Pages
+												</NavLink>
+												<ul className="dropdown">
+													<li>
+														<NavLink
+															to="/room-details"
+															activeClassName="active"
+														>
+															Room Details
+														</NavLink>
+													</li>
+													<li>
+														<NavLink
+															to="/blog-details"
+															activeClassName="active"
+														>
+															Blog Details
+														</NavLink>
+													</li>
+													<li>
+														<NavLink to="/family-room" activeClassName="active">
+															Family Room
+														</NavLink>
+													</li>
+													<li>
+														<NavLink
+															to="/premium-room"
+															activeClassName="active"
+														>
+															Premium Room
+														</NavLink>
+													</li>
+												</ul>
+											</li>
+											<li>
+												<NavLink to="/blog" activeClassName="active">
+													News
+												</NavLink>
+											</li>
+											<li>
+												<NavLink to="/contact" activeClassName="active">
+													Contact
+												</NavLink>
 											</li>
 										</ul>
-									</li>
-									<li>
-										<a href="./blog.html">News</a>
-									</li>
-									<li>
-										<a href="./contact.html">Contact</a>
-									</li>
-								</ul>
-							</nav>
-							<div class="nav-right search-switch">
-								<i class="icon_search"></i>
+									</nav>
+									<div className="nav-right search-switch">
+										<i className="icon_search"></i>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-		</div>
+			)}
+		</>
 	);
 };
 

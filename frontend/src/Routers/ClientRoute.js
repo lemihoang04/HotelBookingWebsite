@@ -2,6 +2,8 @@ import React from "react";
 
 import Home from "../pages/Home/Home";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import Login from "../Component/Login/Login";
+import Register from "../Component/Register/Register";
 
 const ClientRoute = () => {
 	return (
@@ -17,13 +19,13 @@ const ClientRoute = () => {
 				{/* <Route path="/admin">
 					<Login_Admin />
 				</Route> */}
-				{/* <Route path="/login">
+				<Route path="/login">
 					<Login />
 				</Route>
 				<Route path="/register">
 					<Register />
 				</Route>
-				<Route path="/users">users</Route> */}
+				<Route path="/users">users</Route>
 				<Route path="/" exact>
 					<Home />
 				</Route>

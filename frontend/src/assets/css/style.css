@@ -32,13 +32,19 @@
 /* Template default CSS
 /*----------------------------------------*/
 
-html, body {
+html,
+body {
 	height: 100%;
 	font-family: "Oswald", serif;
 	-webkit-font-smoothing: antialiased;
 	font-smoothing: antialiased;
 }
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
 	margin: 0;
 	color: #111111;
 	font-weight: 400;
@@ -73,15 +79,20 @@ p {
 img {
 	max-width: 100%;
 }
-input:focus, select:focus, button:focus, textarea:focus {
+input:focus,
+select:focus,
+button:focus,
+textarea:focus {
 	outline: none;
 }
-a:hover, a:focus {
+a:hover,
+a:focus {
 	text-decoration: none;
 	outline: none;
 	color: #fff;
 }
-ul, ol {
+ul,
+ol {
 	padding: 0;
 	margin: 0;
 }
@@ -119,7 +130,16 @@ ul, ol {
 	padding-top: 50px;
 	padding-bottom: 70px;
 }
-.text-white h1, .text-white h2, .text-white h3, .text-white h4, .text-white h5, .text-white h6, .text-white p, .text-white span, .text-white li, .text-white a {
+.text-white h1,
+.text-white h2,
+.text-white h3,
+.text-white h4,
+.text-white h5,
+.text-white h6,
+.text-white p,
+.text-white span,
+.text-white li,
+.text-white a {
 	color: #fff;
 }
 /* buttons */
@@ -407,7 +427,7 @@ ul, ol {
 .menu-item .nav-menu .mainmenu li.active a:after {
 	opacity: 1;
 }
-.menu-item .nav-menu .mainmenu li:hover>a:after {
+.menu-item .nav-menu .mainmenu li:hover > a:after {
 	opacity: 1;
 }
 .menu-item .nav-menu .mainmenu li:hover .dropdown {
@@ -416,10 +436,11 @@ ul, ol {
 	visibility: visible;
 }
 .menu-item .nav-menu .mainmenu li a {
-	font-size: 16px;
+	font-size: 18px;
 	color: #19191a;
 	margin-right: 42px;
-	font-weight: 500;
+	font-weight: bold;
+	text-decoration: none;
 	display: inline-block;
 	padding: 27px 0;
 	position: relative;
@@ -639,7 +660,10 @@ ul, ol {
 .hero-slider.owl-carousel .owl-dots button:last-child {
 	margin-right: 0;
 }
-.hero-slider .owl-stage-outer, .hero-slider .owl-stage, .hero-slider .owl-item, .hero-slider .hs-item {
+.hero-slider .owl-stage-outer,
+.hero-slider .owl-stage,
+.hero-slider .owl-item,
+.hero-slider .hs-item {
 	height: 100%;
 }
 /*---------------------
@@ -887,7 +911,7 @@ ul, ol {
 	line-height: 40px;
 	text-align: center;
 	color: #ffffff;
-	border: 1px solid #5A4D48;
+	border: 1px solid #5a4d48;
 	border-radius: 50%;
 	-webkit-transition: all 0.3s;
 	-o-transition: all 0.3s;
@@ -936,7 +960,7 @@ ul, ol {
 	width: 100%;
 	height: 50px;
 	border-radius: 2px;
-	background: #393D4A;
+	background: #393d4a;
 	border: none;
 	padding-left: 20px;
 	font-size: 16px;
@@ -1206,7 +1230,7 @@ ul, ol {
 .room-pagination a {
 	font-size: 16px;
 	color: #707079;
-	border: 1px solid #EFD4B9;
+	border: 1px solid #efd4b9;
 	border-radius: 2px;
 	padding: 7px 13px 5px;
 	margin-right: 7px;
@@ -1716,7 +1740,10 @@ ul, ol {
 .blog-details-text .comment-option .single-comment-item.first-comment .sc-text {
 	padding-left: 22px;
 }
-.blog-details-text .comment-option .single-comment-item.first-comment .sc-text:before {
+.blog-details-text
+	.comment-option
+	.single-comment-item.first-comment
+	.sc-text:before {
 	position: absolute;
 	left: 0;
 	top: 0;
@@ -1729,10 +1756,16 @@ ul, ol {
 	padding-left: 120px;
 	margin-bottom: 52px;
 }
-.blog-details-text .comment-option .single-comment-item.second-comment .sc-text {
+.blog-details-text
+	.comment-option
+	.single-comment-item.second-comment
+	.sc-text {
 	padding-left: 22px;
 }
-.blog-details-text .comment-option .single-comment-item.second-comment .sc-text:before {
+.blog-details-text
+	.comment-option
+	.single-comment-item.second-comment
+	.sc-text:before {
 	position: absolute;
 	left: 0;
 	top: 0;
@@ -1778,7 +1811,7 @@ ul, ol {
 	text-transform: uppercase;
 	letter-spacing: 1px;
 	padding: 5px 24px;
-	border: 1px solid #F9EEE3;
+	border: 1px solid #f9eee3;
 	border-radius: 50px;
 	-webkit-transition: all 0.3s;
 	-o-transition: all 0.3s;
@@ -2069,7 +2102,10 @@ ul, ol {
 		position: relative;
 		margin-bottom: 10px;
 	}
-	.offcanvas-menu-wrapper .header-configure-area .language-option:hover .flag-dropdown {
+	.offcanvas-menu-wrapper
+		.header-configure-area
+		.language-option:hover
+		.flag-dropdown {
 		top: 40px;
 		opacity: 1;
 		visibility: visible;
@@ -2086,7 +2122,10 @@ ul, ol {
 		text-transform: uppercase;
 		font-weight: 500;
 	}
-	.offcanvas-menu-wrapper .header-configure-area .language-option .flag-dropdown {
+	.offcanvas-menu-wrapper
+		.header-configure-area
+		.language-option
+		.flag-dropdown {
 		position: absolute;
 		left: 0;
 		top: 60px;
@@ -2103,11 +2142,22 @@ ul, ol {
 		transition: all 0.3s;
 		z-index: 99;
 	}
-	.offcanvas-menu-wrapper .header-configure-area .language-option .flag-dropdown ul li {
+	.offcanvas-menu-wrapper
+		.header-configure-area
+		.language-option
+		.flag-dropdown
+		ul
+		li {
 		list-style: none;
 		text-align: left;
 	}
-	.offcanvas-menu-wrapper .header-configure-area .language-option .flag-dropdown ul li a {
+	.offcanvas-menu-wrapper
+		.header-configure-area
+		.language-option
+		.flag-dropdown
+		ul
+		li
+		a {
 		font-size: 14px;
 		text-transform: uppercase;
 		font-weight: 500;
@@ -2116,7 +2166,13 @@ ul, ol {
 		-o-transition: all 0.3s;
 		transition: all 0.3s;
 	}
-	.offcanvas-menu-wrapper .header-configure-area .language-option .flag-dropdown ul li a:hover {
+	.offcanvas-menu-wrapper
+		.header-configure-area
+		.language-option
+		.flag-dropdown
+		ul
+		li
+		a:hover {
 		color: #dfa974;
 	}
 	.offcanvas-menu-wrapper .header-configure-area .bk-btn {
@@ -2183,7 +2239,11 @@ ul, ol {
 	.offcanvas-menu-wrapper .slicknav_menu .slicknav_nav .slicknav_row:hover a {
 		color: #dfa974;
 	}
-	.offcanvas-menu-wrapper .slicknav_menu .slicknav_nav .slicknav_row:hover span {
+	.offcanvas-menu-wrapper
+		.slicknav_menu
+		.slicknav_nav
+		.slicknav_row:hover
+		span {
 		color: #dfa974;
 	}
 	.offcanvas-menu-wrapper .top-social {
@@ -2303,20 +2363,37 @@ ul, ol {
 	.video-section {
 		padding-top: 80px;
 	}
-	.rd-reviews .review-item .ri-pic, .blog-details-text .comment-option .single-comment-item .sc-author {
+	.rd-reviews .review-item .ri-pic,
+	.blog-details-text .comment-option .single-comment-item .sc-author {
 		float: none;
 		margin-bottom: 30px;
 	}
 	.rd-reviews .review-item .ri-text .rating {
 		position: relative;
 	}
-	.rd-reviews .review-item .ri-text, .blog-details-text .comment-option .single-comment-item.second-comment .sc-text, .blog-details-text .comment-option .single-comment-item.first-comment .sc-text {
+	.rd-reviews .review-item .ri-text,
+	.blog-details-text
+		.comment-option
+		.single-comment-item.second-comment
+		.sc-text,
+	.blog-details-text
+		.comment-option
+		.single-comment-item.first-comment
+		.sc-text {
 		padding-left: 0;
 	}
 	.blog-details-text .comment-option .single-comment-item.reply-comment {
 		padding-left: 30px;
 	}
-	.rd-reviews .review-item .ri-text:before, .blog-details-text .comment-option .single-comment-item.first-comment .sc-text:before, .blog-details-text .comment-option .single-comment-item.second-comment .sc-text:before {
+	.rd-reviews .review-item .ri-text:before,
+	.blog-details-text
+		.comment-option
+		.single-comment-item.first-comment
+		.sc-text:before,
+	.blog-details-text
+		.comment-option
+		.single-comment-item.second-comment
+		.sc-text:before {
 		display: none;
 	}
 	.blog-details-hero {
