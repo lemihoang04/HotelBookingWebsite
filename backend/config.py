@@ -5,7 +5,7 @@ DATABASE_CONFIG = {
     'user': 'root',
     'password': '',
     'host': 'localhost',
-    'database': 'bookinghotel'
+    'database': 'booking_hotel'
 }
 
 
