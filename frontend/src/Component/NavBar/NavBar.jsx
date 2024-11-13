@@ -1,5 +1,5 @@
 import React from "react";
-import "../../assets/css/style.css";
+
 import { NavLink, useLocation } from "react-router-dom";
 
 const NavBar = () => {
@@ -10,7 +10,7 @@ const NavBar = () => {
 			{location.pathname === "/admin" ? (
 				<></>
 			) : (
-				<div className="menu-item">
+				<div className="menu-item ">
 					<div className="container">
 						<div className="row">
 							<div className="col-lg-2">

@@ -31,6 +31,7 @@
 
 /* Template default CSS
 /*----------------------------------------*/
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500&display=swap');
 
 html,
 body {
@@ -174,15 +175,7 @@ ol {
 	font-weight: 700;
 	position: relative;
 }
-.primary-btn:after {
-	position: absolute;
-	left: 0;
-	bottom: -5px;
-	width: 100%;
-	height: 2px;
-	background: #dfa974;
-	content: "";
-}
+
 /* Preloder */
 
 #preloder {
@@ -462,7 +455,7 @@ ol {
 	margin-right: 42px;
 	font-weight: bold;
 	text-decoration: none;
-	display: inline-block;
+	/* display: inline-block; */
 	padding: 27px 0;
 	position: relative;
 	-webkit-transition: all 0.3s;
@@ -539,7 +532,7 @@ ol {
 
 .hero-section {
 	position: relative;
-	padding-bottom: 100px;
+	padding-bottom: 10px;
 }
 .hero-section .container {
 	position: relative;
