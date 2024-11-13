@@ -16,7 +16,10 @@ const NavBar = () => {
 							<div className="col-lg-2">
 								<div className="logo">
 									<NavLink to="/">
-										{/* <img src="img/logo.png" alt="Logo" /> */}
+										<img
+											src={require("../../pages/Home/img/logo.png")}
+											alt="Logo"
+										/>
 									</NavLink>
 								</div>
 							</div>
