@@ -38,6 +38,26 @@ body {
 	font-family: "Oswald", serif;
 	-webkit-font-smoothing: antialiased;
 	font-smoothing: antialiased;
+	overflow-x: hidden;
+}
+.slider-container {
+	position: relative;
+	max-width: 100%; /* Giới hạn chiều rộng của slider */
+	overflow: hidden; /* Giúp tránh tràn nội dung ra ngoài */
+}
+
+.slider {
+	display: flex;
+	transition: transform 0.5s ease-in-out; /* Cải thiện chuyển động slide */
+}
+
+.slide {
+	min-width: 100%; /* Đảm bảo mỗi slide chiếm toàn bộ chiều rộng */
+	background-color: #ccc;
+	text-align: center;
+}
+a {
+	text-decoration: none;
 }
 h1,
 h2,
@@ -85,9 +105,7 @@ button:focus,
 textarea:focus {
 	outline: none;
 }
-a {
-	text-decoration: none;
-}
+
 a:hover,
 a:focus {
 	text-decoration: none;
@@ -521,7 +539,6 @@ ol {
 
 .hero-section {
 	position: relative;
-	padding-top: 60px;
 	padding-bottom: 100px;
 }
 .hero-section .container {
@@ -794,7 +811,7 @@ ol {
 	color: #ffffff;
 }
 .hp-room-items .hp-room-item .hr-text table {
-	margin-bottom: 30px;
+	margin-bottom: 15px;
 }
 .hp-room-items .hp-room-item .hr-text table tbody tr td {
 	font-size: 16px;
@@ -1587,6 +1604,7 @@ ol {
 }
 .blog-item .bi-text h4 a {
 	color: #ffffff;
+	text-decoration: none;
 }
 .blog-item .bi-text .b-time {
 	font-size: 12px;

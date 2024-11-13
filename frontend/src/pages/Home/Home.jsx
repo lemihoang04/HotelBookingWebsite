@@ -5,6 +5,7 @@ import Slider from "react-slick";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "../../assets/css/style.css";
+import { Carousel } from "react-bootstrap";
 const Home = () => {
 	const [startDate, setStartDate] = useState(null);
 	const [endDate, setEndDate] = useState(null);
@@ -18,78 +19,76 @@ const Home = () => {
 	return (
 		<>
 			<section class="hero-section">
-				<div class="container">
-					<div class="row">
-						<div class="col-lg-6">
-							<div class="hero-text">
-								<h1>Sona A Luxury Hotel</h1>
-								<p>
-									Here are the best hotel booking sites, including
-									recommendations for international travel and for finding
-									low-priced hotel rooms.
-								</p>
-								<a href="#" class="primary-btn">
-									Discover Now
-								</a>
+				<Carousel>
+					<Carousel.Item>
+						<img
+							className="d-block w-100 slider_img"
+							src={require("../Home/img/hero/hero-1.jpg")}
+							alt="First slide"
+						/>
+						<Carousel.Caption>
+							<div class="col-lg-6">
+								<div class="hero-text">
+									<h1>Sona A Luxury Hotel</h1>
+									<p>
+										Here are the best hotel booking sites, including
+										recommendations for international travel and for finding
+										low-priced hotel rooms.
+									</p>
+									<a href="#" class="primary-btn">
+										Discover Now
+									</a>
+								</div>
 							</div>
-						</div>
-						<div class="col-xl-4 col-lg-5 offset-xl-2 offset-lg-1">
-							<div class="booking-form">
-								<h3>Booking Your Hotel</h3>
-								<form action="#">
-									<div class="check-date">
-										<label for="date-in">Check In:</label>
-										<DatePicker
-											selected={startDate}
-											onChange={(date) => setStartDate(date)}
-											selectsStart
-											startDate={startDate}
-											endDate={endDate}
-											dateFormat="dd/MM/yyyy"
-										/>
+						</Carousel.Caption>
+					</Carousel.Item>
 
-										<i class="icon_calendar"></i>
-									</div>
-									<div class="check-date">
-										<label for="date-out">Check Out:</label>
-										<DatePicker
-											selected={endDate}
-											onChange={(date) => setEndDate(date)}
-											selectsEnd
-											startDate={endDate}
-											endDate={startDate}
-											dateFormat="dd/MM/yyyy"
-										/>
-										<i class="icon_calendar"></i>
-									</div>
-									<div class="select-option">
-										<label for="guest">Guests:</label>
-										<select id="guest">
-											<option value="">2 Adults</option>
-											<option value="">3 Adults</option>
-										</select>
-									</div>
-									<div class="select-option">
-										<label for="room">Room:</label>
-										<select id="room">
-											<option value="">1 Room</option>
-											<option value="">2 Room</option>
-										</select>
-									</div>
-									<button type="submit">Check Availability</button>
-								</form>
+					<Carousel.Item>
+						<img
+							className="d-block w-100"
+							src={require("../Home/img/hero/hero-2.jpg")}
+							alt="Second slide"
+						/>
+						<Carousel.Caption>
+							<div class="col-lg-6">
+								<div class="hero-text">
+									<h1>Sona A Luxury Hotel</h1>
+									<p>
+										Here are the best hotel booking sites, including
+										recommendations for international travel and for finding
+										low-priced hotel rooms.
+									</p>
+									<a href="#" class="primary-btn">
+										Discover Now
+									</a>
+								</div>
 							</div>
-						</div>
-					</div>
-				</div>
-				<div class="hero-slider owl-carousel">
-					<div
-						class="hs-item set-bg"
-						style={{
-							backgroundImage: `url(${require("../Home/img/hero/hero-1.jpg")})`,
-						}}
-					></div>
-				</div>
+						</Carousel.Caption>
+					</Carousel.Item>
+
+					<Carousel.Item>
+						<img
+							className="d-block w-100"
+							src={require("../Home/img/hero/hero-3.jpg")}
+							alt="Third slide"
+						/>
+						<Carousel.Caption>
+							<div class="col-lg-6">
+								<div class="hero-text">
+									<h1>Sona A Luxury Hotel</h1>
+									<p>
+										Here are the best hotel booking sites, including
+										recommendations for international travel and for finding
+										low-priced hotel rooms.
+									</p>
+									<a href="#" class="primary-btn">
+										Discover Now
+									</a>
+								</div>
+							</div>
+						</Carousel.Caption>
+					</Carousel.Item>
+				</Carousel>
 			</section>
 
 			<section class="aboutus-section spad">

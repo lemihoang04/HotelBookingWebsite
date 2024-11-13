@@ -5,30 +5,32 @@ import Room from "../pages/Room/Room";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Login from "../Component/Login/Login";
 import Register from "../Component/Register/Register";
+import RoomInfo from "../pages/Room/RoomInfo";
+import Login_Admin from "../Component/Login/Login_Admin";
+import Admin from "../Component/Admin/Admin";
 
 const ClientRoute = () => {
 	return (
 		<div>
 			<Switch>
-				{/* <PrivateRoutes path="/users" component={Users} />
-				<PrivateRoutes path="/ticket" exact component={Ticket} />
-				<PrivateRoutes path="/info-car/id=:id_user" component={InfoCar} />
-				<PrivateRoutes path="/ticket/create" component={Add_Ticket} />
-				<PrivateRoutes path="/ProcessPayment" component={PaymentCall} />
-				<PrivateRoutes path="/SlotCar" component={Slot_Car} />
-				<PrivateRoutes path="/Account/DepositMoney" component={DepositMoney} /> */}
-				{/* <Route path="/admin">
+				<Route path="/login_admin">
 					<Login_Admin />
-				</Route> */}
+				</Route>
+				<Route path="/admin">
+					<Admin />
+				</Route>
 				<Route path="/login">
 					<Login />
 				</Route>
 				<Route path="/register">
 					<Register />
 				</Route>
-				<Route path="/users">users</Route>
-				<Route path="/" exact>
+				<Route path="/rooms" exact>
 					<Room />
+				</Route>
+				<Route path="/rooms/id_room=:id" component={RoomInfo} />
+				<Route path="/" exact>
+					<Home />
 				</Route>
 				<Route path="*">404 Not Found</Route>
 			</Switch>
