@@ -2,6 +2,7 @@ import React from "react";
 
 import Home from "../pages/Home/Home";
 import Room from "../pages/Room/Room";
+import RoomDetail from "../pages/RoomDetail/RoomDetail";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Login from "../Component/Login/Login";
 import Register from "../Component/Register/Register";
@@ -28,7 +29,7 @@ const ClientRoute = () => {
 				<Route path="/rooms" exact>
 					<Room />
 				</Route>
-				<Route path="/rooms/id_room=:id" component={RoomInfo} />
+				<Route path="/rooms/id_room=:id" component={RoomDetail} />
 				<Route path="/" exact>
 					<Home />
 				</Route>
