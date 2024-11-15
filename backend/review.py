@@ -5,30 +5,29 @@ def review_to_json(review_data):
     return {
         "ReviewID": review_data['ReviewID'],
         "UserID": review_data['UserID'],
-        "HotelID": review_data['HotelID'],
         "Rating": str(review_data['Rating']),
         "Comment": review_data['Comment'],
         "Timestamp": review_data['Timestamp'].isoformat()
     }
 
 # Create a new review record
-def create_review(user_id, hotel_id, rating, comment):
+def create_review(user_id, rating, comment):
     connection = get_db_connection()
     cursor = connection.cursor()
     sql = """
-        INSERT INTO review (UserID, HotelID, Rating, Comment)
-        VALUES (%s, %s, %s, %s)
+        INSERT INTO review (UserID, Rating, Comment)
+        VALUES (%s, %s, %s)
     """
-    cursor.execute(sql, (user_id, hotel_id, rating, comment))
+    cursor.execute(sql, (user_id, rating, comment))
     connection.commit()
     cursor.close()
     connection.close()
 
 # Retrieve all reviews for a specific hotel
-def get_reviews_by_hotel_id(hotel_id):
+def get_reviews():
     connection = get_db_connection()
     cursor = connection.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM review WHERE HotelID = %s", (hotel_id,))
+    cursor.execute("SELECT * FROM review ")
     reviews = cursor.fetchall()
     cursor.close()
     connection.close()

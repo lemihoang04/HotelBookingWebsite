@@ -4,18 +4,17 @@ from datetime import datetime
 def room_to_json(room_data):
     return {
         "RoomID": room_data['RoomID'],  # Assuming the correct key is 'RoomID'
-        "HotelID": room_data['HotelID'],  # Correct key for HotelID
         "RoomType": room_data['RoomType'],
         "Price": room_data['Price'],
         "Availability": room_data['Availability'],  # Assuming 'Availability' corresponds to availability status
         "Features": room_data['Features']
     }
 
-def create_room(HotelID, RoomType, Price, Availability, Features):
+def create_room(RoomType, Price, Availability, Features):
     connection = get_db_connection()
     cursor = connection.cursor()
-    sql = "INSERT INTO room (HotelID, RoomType, Price, Availability, Features) VALUES (%s, %s, %s, %s, %s)"
-    cursor.execute(sql, (HotelID, RoomType, Price, Availability, Features))
+    sql = "INSERT INTO room (RoomType, Price, Availability, Features) VALUES (%s, %s, %s, %s)"
+    cursor.execute(sql, (RoomType, Price, Availability, Features))
     connection.commit()
     cursor.close()
     connection.close()
@@ -38,15 +37,13 @@ def get_room_by_id(room_id):
     connection.close()
     return room_to_json(room) if room else None
 
-def update_room(room_id, hotel_id=None, room_type=None, price=None, availability=None, features=None):
+def update_room(room_id, room_type=None, price=None, availability=None, features=None):
     connection = get_db_connection()
     cursor = connection.cursor()
     updates = []
     values = []
 
-    if hotel_id:
-        updates.append("HotelID = %s")
-        values.append(hotel_id)
+    
     if room_type:
         updates.append("RoomType = %s")
         values.append(room_type)

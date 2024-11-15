@@ -7,10 +7,12 @@ from review import *
 from payment import *
 from booking import *
 app = Flask(__name__)
+
 CORS(app, support_credentials=True)
+
 @app.route('/register', methods=['POST'])
 def api_create_user():
-    data = request.json
+    data = request.form
     name = data.get('Name')
     email = data.get('Email')
     password = data.get('Password')
@@ -37,7 +39,7 @@ def api_get_user_by_id(user_id):
 
 @app.route('/users/<int:user_id>', methods=['PUT'])
 def api_update_user(user_id):
-    data = request.json
+    data = request.form
     name = data.get('Name')
     email = data.get('Email')
     password = data.get('Password')
@@ -73,19 +75,16 @@ def api_login():
 
 @app.route('/create_room', methods=['POST'])
 def api_create_room():
-    data = request.json
-    HotelID = data.get('HotelID')
+    data = request.form
     RoomType = data.get('RoomType')
     Price = data.get('Price')
     Availability = data.get('Availability')
     Features = data.get('Features')
     
-   
-    if not all([HotelID, RoomType, Price, Availability]):
+    if not all([RoomType, Price, Availability, Features]):
         return jsonify({"error": "Missing required information"}), 400
 
-   
-    create_room(HotelID, RoomType, Price, Availability, Features)
+    create_room(RoomType, Price, Availability, Features)
     return jsonify({"message": "Room successfully created"}), 201
 
 @app.route('/rooms', methods=['GET'])
@@ -103,17 +102,17 @@ def api_get_room_by_id(room_id):
 
 @app.route('/rooms/<int:room_id>', methods=['PUT'])
 def api_update_room(room_id):
-    data = request.json
-    hotel_id = data.get('HotelID')
+    data = request.form
+   
     room_type = data.get('RoomType')
     price = data.get('Price')
     availability = data.get('Availability')
     features = data.get('Features')
 
-    if not any([hotel_id, room_type, price, availability, features]):
+    if not any([room_type, price, availability, features]):
         return jsonify({"error": "No information to update"}), 400
 
-    update_room(room_id, hotel_id=hotel_id, room_type=room_type, price=price, availability=availability, features=features)
+    update_room(room_id,room_type=room_type, price=price, availability=availability, features=features)
     return jsonify({"message": "Room information successfully updated"}), 200
 
 @app.route('/rooms/<int:room_id>', methods=['DELETE'])
@@ -124,73 +123,72 @@ def api_delete_room(room_id):
 
 #hotel
 
-@app.route('/hotels', methods=['POST'])
-def api_create_hotel():
-    data = request.json
-    name = data.get('Name')
-    location = data.get('Location')
-    description = data.get('Description')
-    star_rating = data.get('StarRating')
-    contact_info = data.get('ContactInfo')
+# @app.route('/hotels', methods=['POST'])
+# def api_create_hotel():
+#     data = request.form
+#     name = data.get('Name')
+#     location = data.get('Location')
+#     description = data.get('Description')
+#     star_rating = data.get('StarRating')
+#     contact_info = data.get('ContactInfo')
     
-    if not all([name, location, description, star_rating, contact_info]):
-        return jsonify({"error": "Missing required information"}), 400
+#     if not all([name, location, description, star_rating, contact_info]):
+#         return jsonify({"error": "Missing required information"}), 400
 
-    create_hotel(name, location, description, star_rating, contact_info)
-    return jsonify({"message": "Hotel successfully created"}), 201
+#     create_hotel(name, location, description, star_rating, contact_info)
+#     return jsonify({"message": "Hotel successfully created"}), 201
 
-@app.route('/hotels', methods=['GET'])
-def api_get_all_hotels():
-    hotels = get_all_hotels()
-    return jsonify(hotels), 200
+# @app.route('/hotels', methods=['GET'])
+# def api_get_all_hotels():
+#     hotels = get_all_hotels()
+#     return jsonify(hotels), 200
 
-@app.route('/hotels/<int:hotel_id>', methods=['GET'])
-def api_get_hotel_by_id(hotel_id):
-    hotel = get_hotel_by_id(hotel_id)
-    if hotel:
-        return jsonify(hotel), 200
-    else:
-        return jsonify({"error": "Hotel not found"}), 404
+# @app.route('/hotels/<int:hotel_id>', methods=['GET'])
+# def api_get_hotel_by_id(hotel_id):
+#     hotel = get_hotel_by_id(hotel_id)
+#     if hotel:
+#         return jsonify(hotel), 200
+#     else:
+#         return jsonify({"error": "Hotel not found"}), 404
 
-@app.route('/hotels/<int:hotel_id>', methods=['PUT'])
-def api_update_hotel(hotel_id):
-    data = request.json
-    name = data.get('Name')
-    location = data.get('Location')
-    description = data.get('Description')
-    star_rating = data.get('StarRating')
-    contact_info = data.get('ContactInfo')
+# @app.route('/hotels/<int:hotel_id>', methods=['PUT'])
+# def api_update_hotel(hotel_id):
+#     data = request.form
+#     name = data.get('Name')
+#     location = data.get('Location')
+#     description = data.get('Description')
+#     star_rating = data.get('StarRating')
+#     contact_info = data.get('ContactInfo')
 
-    if not any([name, location, description, star_rating, contact_info]):
-        return jsonify({"error": "No information to update"}), 400
+#     if not any([name, location, description, star_rating, contact_info]):
+#         return jsonify({"error": "No information to update"}), 400
 
-    update_hotel(hotel_id, name=name, location=location, description=description, star_rating=star_rating, contact_info=contact_info)
-    return jsonify({"message": "Hotel information successfully updated"}), 200
+#     update_hotel(hotel_id, name=name, location=location, description=description, star_rating=star_rating, contact_info=contact_info)
+#     return jsonify({"message": "Hotel information successfully updated"}), 200
 
-@app.route('/hotels/<int:hotel_id>', methods=['DELETE'])
-def api_delete_hotel(hotel_id):
-    delete_hotel(hotel_id)
-    return jsonify({"message": "Hotel has been deleted"}), 200
+# @app.route('/hotels/<int:hotel_id>', methods=['DELETE'])
+# def api_delete_hotel(hotel_id):
+#     delete_hotel(hotel_id)
+#     return jsonify({"message": "Hotel has been deleted"}), 200
 
 #review
 
 @app.route('/reviews', methods=['POST'])
 def api_create_review():
-    data = request.json
+    data = request.form
     user_id = data.get('UserID')
-    hotel_id = data.get('HotelID')
     rating = data.get('Rating')
     comment = data.get('Comment')
     
-    if not all([user_id, hotel_id, rating]):
+    if not all([user_id, rating]):
         return jsonify({"error": "Missing required information"}), 400
 
-    create_review(user_id, hotel_id, rating, comment)
+    create_review(user_id, rating, comment)
     return jsonify({"message": "Review successfully created"}), 201
 
-@app.route('/reviews/<int:hotel_id>', methods=['GET'])
-def api_get_reviews_by_hotel_id(hotel_id):
-    reviews = get_reviews_by_hotel_id(hotel_id)
+@app.route('/reviews', methods=['GET'])
+def api_get_reviews():
+    reviews = get_reviews()
     return jsonify(reviews), 200
 
 @app.route('/reviews/detail/<int:review_id>', methods=['GET'])
@@ -203,7 +201,7 @@ def api_get_review_by_id(review_id):
 
 @app.route('/reviews/<int:review_id>', methods=['PUT'])
 def api_update_review(review_id):
-    data = request.json
+    data = request.form
     rating = data.get('Rating')
     comment = data.get('Comment')
 
@@ -222,7 +220,7 @@ def api_delete_review(review_id):
 
 @app.route('/payments', methods=['POST'])
 def api_create_payment():
-    data = request.json
+    data = request.form
     booking_id = data.get('BookingID')
     user_id = data.get('UserID')
     amount = data.get('Amount')
@@ -250,7 +248,7 @@ def api_get_payment_by_id(payment_id):
 
 @app.route('/payments/<int:payment_id>', methods=['PUT'])
 def api_update_payment(payment_id):
-    data = request.json
+    data = request.form
     amount = data.get('Amount')
     payment_method = data.get('PaymentMethod')
     payment_status = data.get('PaymentStatus')
@@ -270,7 +268,7 @@ def api_delete_payment(payment_id):
 #booking
 @app.route('/bookings', methods=['POST'])
 def api_create_booking():
-    data = request.json
+    data = request.form
     user_id = data.get('UserID')
     room_id = data.get('RoomID')
     check_in_date = data.get('CheckInDate')
@@ -294,7 +292,7 @@ def api_get_booking_by_id(booking_id):
 
 @app.route('/bookings/<int:booking_id>', methods=['PUT'])
 def api_update_booking(booking_id):
-    data = request.json
+    data = request.form
     room_id = data.get('RoomID')
     check_in_date = data.get('CheckInDate')
     check_out_date = data.get('CheckOutDate')
