@@ -34,14 +34,14 @@ def get_reviews():
     return [review_to_json(review) for review in reviews]
 
 # Retrieve a review by ID
-def get_review_by_id(review_id):
-    connection = get_db_connection()
-    cursor = connection.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM review WHERE ReviewID = %s", (review_id,))
-    review = cursor.fetchone()
-    cursor.close()
-    connection.close()
-    return review_to_json(review) if review else None
+# def get_review_by_id(review_id):
+#     connection = get_db_connection()
+#     cursor = connection.cursor(dictionary=True)
+#     cursor.execute("SELECT * FROM review WHERE ReviewID = %s", (review_id,))
+#     review = cursor.fetchone()
+#     cursor.close()
+#     connection.close()
+#     return review_to_json(review) if review else None
 
 # Update a review record
 def update_review(review_id, rating=None, comment=None):

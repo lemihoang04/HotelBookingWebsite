@@ -25,6 +25,14 @@ def create_payment(booking_id, user_id, amount, payment_method, payment_status):
     cursor.close()
     connection.close()
 
+def get_Payments():
+    connection = get_db_connection()
+    cursor = connection.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM payment")
+    payments = cursor.fetchall()
+    cursor.close()
+    connection.close()
+    return [payment_to_json(payment) for payment in payments]
 # Retrieve all payments for a specific booking
 def get_payments_by_booking_id(booking_id):
     connection = get_db_connection()

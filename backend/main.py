@@ -192,13 +192,13 @@ def api_get_reviews():
     reviews = get_reviews()
     return jsonify(reviews), 200
 
-@app.route('/reviews/detail/<int:review_id>', methods=['GET'])
-def api_get_review_by_id(review_id):
-    review = get_review_by_id(review_id)
-    if review:
-        return jsonify(review), 200
-    else:
-        return jsonify({"error": "Review not found"}), 404
+# @app.route('/reviews/detail/<int:review_id>', methods=['GET'])
+# def api_get_review_by_id(review_id):
+#     review = get_review_by_id(review_id)
+#     if review:
+#         return jsonify(review), 200
+#     else:
+#         return jsonify({"error": "Review not found"}), 404
 
 @app.route('/reviews/<int:review_id>', methods=['PUT'])
 def api_update_review(review_id):
@@ -233,6 +233,11 @@ def api_create_payment():
 
     create_payment(booking_id, user_id, amount, payment_method, payment_status)
     return jsonify({"message": "Payment successfully created"}), 201
+
+@app.route('/payments', methods=['GET'])
+def api_get_payments():
+    payments = get_Payments()
+    return jsonify(payments), 200
 
 @app.route('/payments/<int:booking_id>', methods=['GET'])
 def api_get_payments_by_booking_id(booking_id):
@@ -282,6 +287,11 @@ def api_create_booking():
 
     create_booking(user_id, room_id, check_in_date, check_out_date, total_price, booking_status)
     return jsonify({"message": "Booking successfully created"}), 201
+
+@app.route('/bookings', methods=['GET'])
+def api_get_bookings():
+    bookings = get_Bookings()
+    return jsonify(bookings), 200
 
 @app.route('/bookings/<int:booking_id>', methods=['GET'])
 def api_get_booking_by_id(booking_id):
