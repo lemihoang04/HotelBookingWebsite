@@ -1,7 +1,11 @@
 import axios from "../setup/axios";
 const LoginUser = (data) => {
 	return axios
-		.post("/login", data)
+		.post("/login", data, {
+			headers: {
+				"Content-Type": "application/x-www-form-urlencoded",
+			},
+		})
 		.then((response) => {
 			return response;
 		})

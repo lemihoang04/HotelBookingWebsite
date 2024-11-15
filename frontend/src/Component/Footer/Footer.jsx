@@ -6,7 +6,7 @@ const Footer = () => {
 	const location = useLocation();
 	return (
 		<>
-			{location.pathname === "/login" || location.pathname === "/register" ? (
+			{location.pathname === "/admin" ? (
 				<></>
 			) : (
 				<footer>
