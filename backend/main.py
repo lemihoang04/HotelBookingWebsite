@@ -6,6 +6,8 @@ from hotel import *
 from review import *
 from payment import *
 from booking import *
+from flask import session
+
 app = Flask(__name__)
 
 CORS(app, origins="http://localhost:3000", supports_credentials=True)
@@ -56,6 +58,7 @@ def api_update_user(user_id):
 def api_delete_user(user_id):
     delete_user(user_id)
     return jsonify({"message": "User has been deleted"}), 200
+
 @app.route('/login',  methods=['POST'])
 def api_login():
     data = request.form
@@ -68,11 +71,16 @@ def api_login():
 
     user = login(email, password)
     if user:
+        session['user_id'] = user['id']  
+        session['email'] = email
         return jsonify({"errCode":0,"user": user}), 200
     else:
         return jsonify({"error": "Wrong email or password"}), 404
+@app.route('/logout', methods=['POST'])
+def api_logout():
+    session.clear()  
+    return jsonify({"message": "Logged out successfully"}), 200
 
-# room
 
 @app.route('/create_room', methods=['POST'])
 def api_create_room():
