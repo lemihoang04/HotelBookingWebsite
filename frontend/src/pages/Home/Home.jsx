@@ -5,6 +5,7 @@ import Slider from "react-slick";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "../../assets/css/style.css";
+import "../../assets/css/flaticon.css";
 import { Carousel } from "react-bootstrap";
 const Home = () => {
 	const [startDate, setStartDate] = useState(null);

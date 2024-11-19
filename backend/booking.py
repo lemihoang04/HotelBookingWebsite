@@ -29,6 +29,15 @@ def create_booking(user_id, room_id, check_in_date, check_out_date, total_price,
     cursor.close()
     connection.close()
 
+def get_Bookings():
+    connection = get_db_connection()
+    cursor = connection.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM booking ")
+    bookings = cursor.fetchall()
+    cursor.close()
+    connection.close()
+    return [booking_to_json(booking) for booking in bookings]
+
 # Retrieve a booking by ID
 def get_booking_by_id(booking_id):
     connection = get_db_connection()

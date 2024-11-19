@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from 'react-router-dom';
 import room1 from "../img/room/room-1.jpg";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./room.css";
@@ -134,9 +135,9 @@ const Room = () => {
 											</tr>
 										</tbody>
 									</table>
-									<a href="#" className="primary-btn">
-										More Details
-									</a>
+									<Link to={`/rooms/id_room=1`} className="primary-btn">
+									More Details
+									</Link>
 								</div>
 							</div>
 						</div>
