@@ -9,8 +9,6 @@ import { GetAllRooms } from "../../services/apiService";
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
 const Room = () => {
 	const history = useHistory();
-	const [startDate, setStartDate] = useState(new Date());
-	const [endDate, setEndDate] = useState(new Date());
 	const [rooms, setRooms] = useState([]);
 	const GetDataRooms = async () => {
 		let response = await GetAllRooms();
@@ -57,31 +55,10 @@ const Room = () => {
 												<h3>
 													{item.Price}$<span>/Pernight</span>
 												</h3>
-												<table>
-													<tbody>
-														<tr>
-															<td className="r-o">Size:</td>
-															<td>30 ft</td>
-														</tr>
-														<tr>
-															<td className="r-o">Capacity:</td>
-															<td>Max person 3</td>
-														</tr>
-														<tr>
-															<td className="r-o">Bed:</td>
-															<td>King Beds</td>
-														</tr>
-														<tr>
-															<td className="r-o">Services:</td>
-															<td>{item.Features}</td>
-														</tr>
-													</tbody>
-												</table>
-
 												<button
 													type="button"
 													onClick={() => HandleClick(item)}
-													className="primary-btn"
+													className="btn btn-primary"
 												>
 													More Details
 												</button>

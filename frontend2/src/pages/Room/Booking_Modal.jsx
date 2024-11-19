@@ -2,9 +2,10 @@ import React from "react";
 import { Button, Modal } from "react-bootstrap";
 
 const Booking_Modal = (props) => {
-	const { toggle, isOpen } = props;
+	const { toggle, isOpen, formValue } = props;
 	return (
 		<div className="text-center">
+			{console.log("af", formValue)}
 			<Modal
 				show={isOpen}
 				onHide={() => {
@@ -25,7 +26,7 @@ const Booking_Modal = (props) => {
 									type="text"
 									className="form-control"
 									name="email"
-									// value={formValues.email}
+									// value={formValue.email}
 									// onChange={handleInputChange}
 								/>
 							</div>
@@ -35,7 +36,8 @@ const Booking_Modal = (props) => {
 									type="number"
 									className="form-control"
 									name="password"
-									// value={formValues.password}
+									value={formValue.RoomPrice}
+									readOnly
 									// onChange={handleInputChange}
 								/>
 							</div>
@@ -47,7 +49,8 @@ const Booking_Modal = (props) => {
 									type="text"
 									className="form-control"
 									name="fullName"
-									// value={formValues.fullName}
+									value={formValue.Days}
+									readOnly
 									// onChange={handleInputChange}
 								/>
 							</div>
@@ -57,7 +60,8 @@ const Booking_Modal = (props) => {
 									type="text"
 									className="form-control"
 									name="phone"
-									// value={formValues.phone}
+									value={formValue.TotalPrice}
+									readOnly
 									// onChange={handleInputChange}
 								/>
 							</div>

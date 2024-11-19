@@ -1,14 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import room1 from "../img/room/room-1.jpg";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import Booking_Modal from "../Room/Booking_Modal";
-
+import { toast } from "react-toastify";
 const RoomDetail = () => {
 	const [startDate, setStartDate] = useState(new Date());
 	const [endDate, setEndDate] = useState(new Date());
+	const [formValue, setFormValue] = useState({
+		userName: "",
+		Days: "",
+		RoomPrice: "",
+		TotalPrice: "",
+	});
 	const location = useLocation();
 	const roomData = location.state;
 	const [isOpenModalBooking, setIsOpenModalBooking] = useState(false);
@@ -16,11 +22,31 @@ const RoomDetail = () => {
 		setIsOpenModalBooking(!isOpenModalBooking);
 	};
 	const HandleBooking = () => {
-		setIsOpenModalBooking(true);
+		if (startDate >= endDate) {
+			toast.error("Please select a valid date");
+		} else {
+			setIsOpenModalBooking(true);
+		}
 	};
+	useEffect(() => {
+		const days = Math.ceil((endDate - startDate) / (1000 * 3600 * 24));
+		const roomPrice = roomData.Price;
+		const totalPrice = roomPrice * days;
+		setFormValue({
+			...formValue,
+			Days: days,
+			RoomPrice: roomPrice,
+			TotalPrice: totalPrice,
+		});
+	}, [startDate, endDate, roomData]);
 	return (
 		<>
-			<Booking_Modal isOpen={isOpenModalBooking} toggle={toggleBookingModal} />
+			{console.log(formValue)}
+			<Booking_Modal
+				isOpen={isOpenModalBooking}
+				toggle={toggleBookingModal}
+				formValue={formValue}
+			/>
 			<div className="breadcrumb-section">
 				<div className="container">
 					<div className="row">
