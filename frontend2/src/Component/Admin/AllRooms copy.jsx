@@ -1,21 +1,21 @@
 import React from "react";
-import "../Admin/manageusers.css";
-const ManageUsers = () => {
+import "../Admin/allrooms.css";
+const AllRooms = () => {
 	return (
 		<>
 			<div>
-				<h2>Manage Users</h2>
+				<h2>All Room</h2>
 			</div>
 			<div className="users-table mt-3 mx-5">
 				<table id="customers">
 					<tbody>
 						<tr>
 							<th>Id</th>
-							<th>First Name</th>
-							<th>Last Name</th>
-							<th>Number Phone</th>
-							<th>Gender</th>
-							<th>Email</th>
+							<th>Room Name</th>
+							<th>Total Rooms</th>
+							<th>No of Beds</th>
+							<th>Price</th>
+							<th>Image</th>
 							<th>Status</th>
 							<th>Edit</th>
 							<th>Delete</th>
@@ -27,4 +27,4 @@ const ManageUsers = () => {
 	);
 };
 
-export default ManageUsers;
+export default AllRooms;

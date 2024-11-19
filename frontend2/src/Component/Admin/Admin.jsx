@@ -3,7 +3,7 @@ import AdminDashboard from "../Admin/AdminDashboard";
 import SelectionType from "./Selection_type";
 import AllRooms from "./AllRooms";
 import AddRooms from "./AddRooms";
-import ManageUsers from "./ManageUsers";
+import ManageUsers from "./UserManage/ManageUsers";
 import AllBookings from "./AllBookings";
 
 const Admin = () => {
@@ -28,7 +28,7 @@ const Admin = () => {
 	return (
 		<div style={{ display: "flex" }}>
 			<SelectionType activeMenu={activeMenu} setActiveMenu={setActiveMenu} />
-			<div className="content-area">{renderContent()}</div>
+			<div className="content-area" >{renderContent()}</div>
 		</div>
 	);
 };
