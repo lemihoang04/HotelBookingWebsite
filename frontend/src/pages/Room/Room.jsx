@@ -16,7 +16,7 @@ const Room = () => {
 							<div className="breadcrumb-text">
 								<h2>Our Rooms</h2>
 								<div className="bt-option">
-									<a href="./home.html">Home</a>
+									<a href="/">Home</a>
 									<span>Rooms</span>
 								</div>
 							</div>

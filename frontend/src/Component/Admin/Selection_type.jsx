@@ -1,84 +1,48 @@
 import React from "react";
 import "../Admin/selectionType.css";
 
-const Selection_type = () => {
+const SelectionType = ({ activeMenu, setActiveMenu }) => {
 	return (
 		<div className="sidebar-container">
-			<ul
-				className="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled"
-				id="accordionSidebar"
-			>
-				<li>
-					<h1 className="brand-name">Sona</h1>
+			<h1 className="brand-name">Sona</h1>
+			<ul className="sidebar-menu">
+				<li
+					className={activeMenu === "dashboard" ? "active" : ""}
+					onClick={() => setActiveMenu("dashboard")}
+				>
+					<i className="fas fa-tachometer-alt"></i> Admin Dashboard
 				</li>
-				<hr className="sidebar-divider my-0" />
-
-				<li className="nav-item">
-					<a className="nav-link" href="/admin">
-						<i className="fas fa-fw fa-tachometer-alt"></i>
-						<span>Admin Dashboard</span>
-					</a>
-				</li>
-
-				<hr className="sidebar-divider" />
 
 				<div className="sidebar-heading">Rooms</div>
-
-				<li className="nav-item">
-					<a
-						className="nav-link collapsed"
-						href="#"
-						data-toggle="collapse"
-						data-target="#collapseTwo"
-						aria-expanded="true"
-						aria-controls="collapseTwo"
-					>
-						<i className="fas fa-fw fa-cog"></i>
-						<span>All Rooms</span>
-					</a>
+				<li
+					className={activeMenu === "all-rooms" ? "active" : ""}
+					onClick={() => setActiveMenu("all-rooms")}
+				>
+					<i className="fas fa-cogs"></i> All Rooms
 				</li>
-
-				<li className="nav-item">
-					<a
-						className="nav-link collapsed"
-						href="#"
-						data-toggle="collapse"
-						data-target="#collapseUtilities"
-						aria-expanded="true"
-						aria-controls="collapseUtilities"
-					>
-						<i className="fas fa-fw fa-wrench"></i>
-						<span>Add Rooms</span>
-					</a>
+				<li
+					className={activeMenu === "add-rooms" ? "active" : ""}
+					onClick={() => setActiveMenu("add-rooms")}
+				>
+					<i className="fas fa-plus-circle"></i> Add Rooms
 				</li>
-
-				<hr className="sidebar-divider" />
 
 				<div className="sidebar-heading">Users</div>
-
-				<li className="nav-item">
-					<a
-						className="nav-link collapsed"
-						href="#"
-						data-toggle="collapse"
-						data-target="#collapsePages"
-						aria-expanded="true"
-						aria-controls="collapsePages"
-					>
-						<i className="fas fa-fw fa-folder"></i>
-						<span>Manage Users</span>
-					</a>
+				<li
+					className={activeMenu === "manage-users" ? "active" : ""}
+					onClick={() => setActiveMenu("manage-users")}
+				>
+					<i className="fas fa-users"></i> Manage Users
 				</li>
-
-				<li className="nav-item">
-					<a className="nav-link" href="charts.html">
-						<i className="fas fa-fw fa-chart-area"></i>
-						<span>All Bookings</span>
-					</a>
+				<li
+					className={activeMenu === "all-bookings" ? "active" : ""}
+					onClick={() => setActiveMenu("all-bookings")}
+				>
+					<i className="fas fa-book"></i> All Bookings
 				</li>
 			</ul>
 		</div>
 	);
 };
 
-export default Selection_type;
+export default SelectionType;

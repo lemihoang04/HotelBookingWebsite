@@ -8,6 +8,7 @@ import Register from "../Component/Register/Register";
 import RoomInfo from "../pages/Room/RoomInfo";
 import Login_Admin from "../Component/Login/Login_Admin";
 import Admin from "../Component/Admin/Admin";
+import AboutUs from "../Component/About/AboutUs";
 
 const ClientRoute = () => {
 	return (
@@ -24,6 +25,9 @@ const ClientRoute = () => {
 				</Route>
 				<Route path="/register">
 					<Register />
+				</Route>
+				<Route path="/about-us">
+					<AboutUs />
 				</Route>
 				<Route path="/rooms" exact>
 					<Room />

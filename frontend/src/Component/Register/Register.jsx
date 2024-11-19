@@ -1,13 +1,14 @@
 import React from "react";
 import "../Login/login.css";
+import blogImage from "../../assets/images/blog-1.jpg";
 const Register = () => {
 	return (
 		<div className="login-page">
 			<div className="wrapper">
 				<div className="container main">
 					<div className="row">
-						<div className="col-md-6 side-image">
-							{/* <img src="../view/img/blog/blog-1.jpg" alt=""> */}
+						<div className="col-md-6 mt-5 side-image">
+							<img src={blogImage} alt="" />;
 						</div>
 
 						<div className="col-md-6 right">

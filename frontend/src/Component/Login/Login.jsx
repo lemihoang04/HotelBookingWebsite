@@ -3,7 +3,7 @@ import "../Login/login.css";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
 import { LoginUser } from "../../services/userService";
-
+import blogImage from "../../assets/images/blog-1.jpg";
 const Login = () => {
 	const history = useHistory();
 	const [formValues, setFormValues] = useState({
@@ -77,8 +77,8 @@ const Login = () => {
 			<div className="wrapper">
 				<div className="container main">
 					<div className="row">
-						<div className="col-md-6 side-image">
-							{/* <img src="../view/img/blog/blog-1.jpg" alt=""> */}
+						<div className="col-md-6 mt-5 side-image">
+							<img src={blogImage} alt="" />;
 						</div>
 						<div className="col-md-6 right">
 							<div className="input-box">
