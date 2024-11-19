@@ -419,6 +419,8 @@ ol {
 .menu-item {
 	position: relative;
 	z-index: 9;
+	outline: solid;
+	background: #F5F5F5;
 }
 .menu-item .logo {
 	padding: 25px 0;
