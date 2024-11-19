@@ -1,0 +1,3 @@
+[submodule "HotelManagementFrontend"]
+	path = HotelManagementFrontend
+	url = https://github.com/lemihoang04/HotelManagementFrontend.git
