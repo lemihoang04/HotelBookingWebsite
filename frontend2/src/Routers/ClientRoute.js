@@ -38,7 +38,7 @@ const ClientRoute = () => {
 				<Route path="/information" exact>
 					<UserInfo />
 				</Route>
-				<Route path="/bookings" exact>
+				<Route path="/mybookings" exact>
 					<Bookings />
 				</Route>
 				<Route path="/rooms/id_room=:id" component={RoomDetail} />

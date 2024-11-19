@@ -9,7 +9,7 @@ from booking import *
 from flask import session
 
 app = Flask(__name__)
-
+app.secret_key = 'hotel'
 CORS(app, origins="http://localhost:3000", supports_credentials=True)
 
 
@@ -26,6 +26,18 @@ def api_create_user():
 
     create_user(name, email, password, phone)
     return jsonify({"message": "User successfully created"}), 201
+
+@app.route('/api/account', methods=['GET'])
+def get_user():
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({"errCode": 1, "message": "Not authenticated"}), 401
+    user = get_user_by_id(user_id)  
+    if user:
+        return jsonify({"errCode": 0, "user": user}), 200
+    else:
+        return jsonify({"errCode": 1, "message": "User not found"}), 404
+
 
 @app.route('/users', methods=['GET'])
 def api_get_all_users():
@@ -71,7 +83,7 @@ def api_login():
 
     user = login(email, password)
     if user:
-        session['user_id'] = user['id']  
+        session['user_id'] = user['UserID']  
         session['email'] = email
         return jsonify({"errCode":0,"user": user}), 200
     else:
@@ -79,7 +91,7 @@ def api_login():
 @app.route('/logout', methods=['POST'])
 def api_logout():
     session.clear()  
-    return jsonify({"message": "Logged out successfully"}), 200
+    return jsonify({"errCode":0,"message": "Logged out successfully"}), 200
 
 
 @app.route('/create_room', methods=['POST'])
