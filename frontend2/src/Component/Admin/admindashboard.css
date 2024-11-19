@@ -1,0 +1,55 @@
+.content {
+	padding: 20px;
+}
+
+.dashboard-information {
+	text-align: center;
+}
+
+.website-dashboard-manager {
+	font-size: 2rem;
+	font-weight: bold;
+	margin-bottom: 20px;
+}
+
+.metrics-overview {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+}
+
+.count {
+	cursor: pointer;
+	padding: 20px;
+	border-radius: 10px;
+	text-align: center;
+	width: 150px;
+}
+
+.users {
+	background-color: #b6cee7;
+}
+
+.rooms {
+	background-color: #f7cb79;
+}
+
+.recruitment-stats {
+	margin-top: 10px;
+}
+
+.label {
+	font-size: 1rem;
+	color: #666;
+}
+
+.placeholder {
+	font-size: 2rem;
+	font-weight: bold;
+}
+
+.bi {
+	font-size: 2rem;
+	margin-bottom: 10px;
+	display: block;
+}

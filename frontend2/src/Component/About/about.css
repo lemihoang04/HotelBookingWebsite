@@ -1,0 +1,22 @@
+.about-text1 {
+	font-weight: bold;
+	font-size: 2rem;
+}
+
+.underline {
+	width: 60px;
+	height: 4px;
+	background-color: red;
+	margin-top: 10px;
+}
+
+.section-title {
+	color: #555;
+	line-height: 1.6;
+	font-size: 1rem;
+}
+
+.section-content {
+	color: #666;
+	font-size: 0.9rem;
+}
