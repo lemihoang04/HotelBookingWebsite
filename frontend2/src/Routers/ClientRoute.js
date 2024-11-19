@@ -10,6 +10,7 @@ import RoomInfo from "../pages/Room/RoomInfo";
 import Login_Admin from "../Component/Login/Login_Admin";
 import Admin from "../Component/Admin/Admin";
 import AboutUs from "../Component/About/AboutUs";
+import UserInfo from "../pages/UserInform/UserInfo";
 
 const ClientRoute = () => {
 	return (
@@ -32,6 +33,9 @@ const ClientRoute = () => {
 				</Route>
 				<Route path="/rooms" exact>
 					<Room />
+				</Route>
+				<Route path="/infomation" exact>
+					<UserInfo />
 				</Route>
 				<Route path="/rooms/id_room=:id" component={RoomDetail} />
 				<Route path="/" exact>

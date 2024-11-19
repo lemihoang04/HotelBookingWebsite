@@ -7,9 +7,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import "../../assets/css/style.css";
 import "../../assets/css/flaticon.css";
 import { Carousel } from "react-bootstrap";
+import "../Home/home.css";
 const Home = () => {
-	const [startDate, setStartDate] = useState(null);
-	const [endDate, setEndDate] = useState(null);
 	const settings = {
 		dots: true,
 		infinite: true,

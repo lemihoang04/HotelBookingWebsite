@@ -38,7 +38,7 @@ const getUserAccount = () => {
 	return axios.get("/api/account");
 };
 const LogOutUser = () => {
-	return axios.post("/api/logout");
+	return axios.post("/logout");
 };
 const EditUserService = (user_edit) => {
 	return axios.put("/api/edit-user", user_edit);

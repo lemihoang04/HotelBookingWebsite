@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import room1 from "../img/room/room-1.jpg";
 import "@fortawesome/fontawesome-free/css/all.min.css";
@@ -7,6 +7,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { GetAllRooms } from "../../services/apiService";
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
+import { UserContext } from "../../Context/UserProvider";
 const Room = () => {
 	const history = useHistory();
 	const [rooms, setRooms] = useState([]);

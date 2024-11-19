@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Button, Modal } from "react-bootstrap";
+import { UserContext } from "../../Context/UserProvider";
 
 const Booking_Modal = (props) => {
+	const { user } = useContext(UserContext);
 	const { toggle, isOpen, formValue } = props;
 	return (
 		<div className="text-center">
-			{console.log("af", formValue)}
 			<Modal
 				show={isOpen}
 				onHide={() => {
@@ -26,7 +27,8 @@ const Booking_Modal = (props) => {
 									type="text"
 									className="form-control"
 									name="email"
-									// value={formValue.email}
+									value={user.account.Name}
+									readOnly
 									// onChange={handleInputChange}
 								/>
 							</div>

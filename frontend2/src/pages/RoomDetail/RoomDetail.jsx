@@ -1,11 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import room1 from "../img/room/room-1.jpg";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
+import {
+	useHistory,
+	useLocation,
+} from "react-router-dom/cjs/react-router-dom.min";
 import Booking_Modal from "../Room/Booking_Modal";
 import { toast } from "react-toastify";
+import { UserContext } from "../../Context/UserProvider";
 const RoomDetail = () => {
 	const [startDate, setStartDate] = useState(new Date());
 	const [endDate, setEndDate] = useState(new Date());
@@ -16,16 +20,22 @@ const RoomDetail = () => {
 		TotalPrice: "",
 	});
 	const location = useLocation();
+	const history = useHistory();
 	const roomData = location.state;
+	const { user } = useContext(UserContext);
 	const [isOpenModalBooking, setIsOpenModalBooking] = useState(false);
 	const toggleBookingModal = () => {
 		setIsOpenModalBooking(!isOpenModalBooking);
 	};
 	const HandleBooking = () => {
-		if (startDate >= endDate) {
-			toast.error("Please select a valid date");
+		if (user && user.isAuthenticated !== true) {
+			history.push("/login");
 		} else {
-			setIsOpenModalBooking(true);
+			if (startDate >= endDate) {
+				toast.error("Please select a valid date");
+			} else {
+				setIsOpenModalBooking(true);
+			}
 		}
 	};
 	useEffect(() => {
@@ -41,7 +51,6 @@ const RoomDetail = () => {
 	}, [startDate, endDate, roomData]);
 	return (
 		<>
-			{console.log(formValue)}
 			<Booking_Modal
 				isOpen={isOpenModalBooking}
 				toggle={toggleBookingModal}

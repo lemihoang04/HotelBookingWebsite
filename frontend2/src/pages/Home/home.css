@@ -1,0 +1,7 @@
+.carousel-item {
+	z-index: 0;
+}
+
+.navbar-nav {
+	z-index: 10;
+}

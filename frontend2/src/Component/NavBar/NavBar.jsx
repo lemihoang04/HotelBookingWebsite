@@ -1,16 +1,31 @@
-import React from "react";
-
+import React, { useContext } from "react";
 import { NavLink, useLocation } from "react-router-dom";
+import { UserContext } from "../../Context/UserProvider";
+import { NavDropdown, Nav } from "react-bootstrap";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { toast } from "react-toastify";
+import { LogOutUser } from "../../services/userService";
 
 const NavBar = () => {
 	const location = useLocation();
-
+	const { user, logoutContext } = useContext(UserContext);
+	const history = useHistory();
+	const HanldeLogout = async () => {
+		let data = await LogOutUser();
+		logoutContext();
+		if (data && data.errCode === 0) {
+			history.push("/");
+			toast.success("Log out success");
+		} else {
+			toast.error(data.errMessage);
+		}
+	};
 	return (
 		<>
 			{location.pathname === "/admin" ? (
 				<></>
 			) : (
-				<div className="menu-item ">
+				<div className="menu-item">
 					<div className="container">
 						<div className="row">
 							<div className="col-lg-2">
@@ -26,28 +41,48 @@ const NavBar = () => {
 							<div className="col-lg-10">
 								<div className="nav-menu">
 									<nav className="mainmenu">
-										<ul>
-											<li>
+										<ul className="d-flex justify-content-start align-items-center mb-0">
+											<li className="mx-3">
 												<NavLink to="/" exact activeClassName="active">
 													Home
 												</NavLink>
 											</li>
-											<li>
+											<li className="mx-3">
 												<NavLink to="/rooms" activeClassName="active">
 													Rooms
 												</NavLink>
 											</li>
-											<li>
+											<li className="mx-3">
 												<NavLink to="/about-us" activeClassName="active">
 													About Us
 												</NavLink>
 											</li>
+											{user && user.isAuthenticated === false ? (
+												<li className="mx-3">
+													<NavLink to="/login" activeClassName="active">
+														Login
+													</NavLink>
+												</li>
+											) : (
+												<NavDropdown
+													title={`Welcome, ${user.account.Name || "Admin"}`}
+													className="NavDropdown mt-1 menu-item-dropdown"
+													id="basic-nav-dropdown"
+												>
+													<NavDropdown.Item>
+														<span>My Bookings</span>
+													</NavDropdown.Item>
+													<NavDropdown.Divider />
+													<NavDropdown.Item as={NavLink} to="/infomation">
+														My Profile
+													</NavDropdown.Item>
 
-											<li>
-												<NavLink to="/login" activeClassName="active">
-													Login
-												</NavLink>
-											</li>
+													<NavDropdown.Divider />
+													<NavDropdown.Item>
+														<span onClick={() => HanldeLogout()}>Log out</span>
+													</NavDropdown.Item>
+												</NavDropdown>
+											)}
 										</ul>
 									</nav>
 									<div className="nav-right search-switch">
