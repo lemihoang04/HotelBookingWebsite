@@ -10,19 +10,29 @@ import {
 import Booking_Modal from "../Room/Booking_Modal";
 import { toast } from "react-toastify";
 import { UserContext } from "../../Context/UserProvider";
+import { ChangeRoomAva, CreatePayment } from "../../services/apiService";
 const RoomDetail = () => {
+	const { user, getformValue } = useContext(UserContext);
 	const [startDate, setStartDate] = useState(new Date());
 	const [endDate, setEndDate] = useState(new Date());
 	const [formValue, setFormValue] = useState({
-		userName: "",
+		UserID: user.account.UserID,
+		userName: user.account.Name,
 		Days: "",
 		RoomPrice: "",
 		TotalPrice: "",
+		CheckInDate: "",
+		CheckOutDate: "",
+		methodPay: "",
+		RoomID: "",
+		BookingID: "",
+		BookingStatus: "Confirmed",
+		PaymentStatus: "",
+		Availability: "",
 	});
 	const location = useLocation();
 	const history = useHistory();
-	const roomData = location.state;
-	const { user } = useContext(UserContext);
+	const roomData = location.state || "";
 	const [isOpenModalBooking, setIsOpenModalBooking] = useState(false);
 	const toggleBookingModal = () => {
 		setIsOpenModalBooking(!isOpenModalBooking);
@@ -38,16 +48,54 @@ const RoomDetail = () => {
 			}
 		}
 	};
-	useEffect(() => {
-		const days = Math.ceil((endDate - startDate) / (1000 * 3600 * 24));
-		const roomPrice = roomData.Price;
-		const totalPrice = roomPrice * days;
+	const handlePaymentMethodChange = (methodPay) => {
 		setFormValue({
 			...formValue,
-			Days: days,
-			RoomPrice: roomPrice,
-			TotalPrice: totalPrice,
+			methodPay: methodPay,
 		});
+	};
+	const HandlePayment = async (form) => {
+		if (formValue.methodPay === "CashPayment") {
+			const updatedFormValue = {
+				...formValue,
+				BookingID: form,
+				PaymentStatus: "Pending",
+				Availability: "1",
+			};
+			setFormValue(updatedFormValue);
+			let response = await CreatePayment(updatedFormValue);
+			let roomChange = await ChangeRoomAva(updatedFormValue);
+		} else if (formValue.methodPay === "PaymentOnline") {
+			const updatedFormValue = {
+				...formValue,
+				BookingID: form,
+				PaymentStatus: "Completed",
+			};
+			setFormValue(updatedFormValue);
+			getformValue(formValue);
+		}
+	};
+
+	useEffect(() => {
+		if (roomData !== "") {
+			const days = Math.ceil((endDate - startDate) / (1000 * 3600 * 24));
+			const roomPrice = roomData.Price;
+			const totalPrice = roomPrice * days;
+
+			const formattedCheckInDate = startDate.toISOString().split("T")[0];
+			const formattedCheckOutDate = endDate.toISOString().split("T")[0];
+			setFormValue({
+				...formValue,
+				Days: days,
+				RoomPrice: roomPrice,
+				TotalPrice: totalPrice,
+				CheckInDate: formattedCheckInDate,
+				CheckOutDate: formattedCheckOutDate,
+				RoomID: roomData.RoomID,
+			});
+		} else {
+			history.push("/rooms");
+		}
 	}, [startDate, endDate, roomData]);
 	return (
 		<>
@@ -55,6 +103,8 @@ const RoomDetail = () => {
 				isOpen={isOpenModalBooking}
 				toggle={toggleBookingModal}
 				formValue={formValue}
+				HandlePayment={HandlePayment}
+				handlePaymentMethod={handlePaymentMethodChange}
 			/>
 			<div className="breadcrumb-section">
 				<div className="container">

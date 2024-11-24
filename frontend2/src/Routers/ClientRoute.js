@@ -12,16 +12,29 @@ import Admin from "../Component/Admin/Admin";
 import AboutUs from "../Component/About/AboutUs";
 import UserInfo from "../pages/UserInform/UserInfo";
 import Bookings from "../pages/Bookings/Bookings";
+import PrivateRoutes from "./PrivateRoutes";
+import AdminRoute from "./AdminRoute";
+import PaymentCall from "../pages/Payment/PaymentCall";
 
 const ClientRoute = () => {
 	return (
 		<div>
 			<Switch>
+				<AdminRoute path="/admin" component={Admin}></AdminRoute>
+				<PrivateRoutes
+					path="/information"
+					exact
+					component={UserInfo}
+				></PrivateRoutes>
+				<PrivateRoutes path="/ProcessPayment" component={PaymentCall} />
+				<PrivateRoutes
+					path="/mybookings"
+					exact
+					component={Bookings}
+				></PrivateRoutes>
+				<PrivateRoutes path="/rooms/id_room=:id" component={RoomDetail} />
 				<Route path="/login_admin">
 					<Login_Admin />
-				</Route>
-				<Route path="/admin">
-					<Admin />
 				</Route>
 				<Route path="/login">
 					<Login />
@@ -35,13 +48,7 @@ const ClientRoute = () => {
 				<Route path="/rooms" exact>
 					<Room />
 				</Route>
-				<Route path="/information" exact>
-					<UserInfo />
-				</Route>
-				<Route path="/mybookings" exact>
-					<Bookings />
-				</Route>
-				<Route path="/rooms/id_room=:id" component={RoomDetail} />
+
 				<Route path="/" exact>
 					<Home />
 				</Route>

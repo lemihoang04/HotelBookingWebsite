@@ -7,10 +7,112 @@ from review import *
 from payment import *
 from booking import *
 from flask import session
-
+import hashlib
+import hmac
+import json
+import requests
+import time
 app = Flask(__name__)
 app.secret_key = 'hotel'
 CORS(app, origins="http://localhost:3000", supports_credentials=True)
+
+# ZaloPay configuration
+ZALOPAY_CONFIG = {
+    "app_id": "2553",
+    "key1": "PcY4iZIKFCIdgZvA6ueMcMHHUbRLYjPL",
+    "key2": "kLtgPl8HHhfvMuDHPwKfgfsY4Ydm9eIz",
+    "create_order_endpoint": "https://sb-openapi.zalopay.vn/v2/create",
+    "query_order_endpoint": "https://sb-openapi.zalopay.vn/v2/query",
+}
+
+def generate_hmac(data, key):
+    return hmac.new(key.encode(), data.encode(), hashlib.sha256).hexdigest()
+
+# ZaloPay routes
+@app.route('/create_order', methods=['POST'])
+def create_zalopay_order():
+    order_details = request.form
+    print(order_details)
+    if not order_details:
+        return jsonify({"error": "Missing order details"}), 400
+
+    trans_id = int(time.time() * 1000)
+    embed_data = {
+        "redirecturl": f"http://localhost:3000/ProcessPayment?id_user={order_details.get('UserID')}"
+    }
+
+    order = {
+        "app_id": ZALOPAY_CONFIG["app_id"],
+        "app_trans_id": f"{time.strftime('%y%m%d')}_{trans_id}",
+        "app_user": order_details.get("userName", "user123"),
+        "app_time": int(time.time() * 1000),
+        "item": json.dumps(order_details.get("items", [])),
+        "embed_data": json.dumps(embed_data),
+        "amount": order_details.get("TotalPrice", 50000),
+        "callback_url": "https://example.ngrok-free.app/callback",
+        "description": f"ZaloPay - Payment for the order #{trans_id}",
+        "bank_code": "",
+    }
+
+    data = f"{order['app_id']}|{order['app_trans_id']}|{order['app_user']}|{order['amount']}|{order['app_time']}|{order['embed_data']}|{order['item']}"
+    order["mac"] = generate_hmac(data, ZALOPAY_CONFIG["key1"])
+
+    try:
+        response = requests.post(
+            ZALOPAY_CONFIG["create_order_endpoint"],
+            data=order,  # Changed to `data` for form-encoded content
+            headers={"Content-Type": "application/x-www-form-urlencoded"},
+        )
+        return jsonify(response.json()), response.status_code
+    except requests.RequestException as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/callback', methods=['POST'])
+def callback_zalopay_order():
+    data = request.form
+    if not data:
+        return jsonify({"error": "Missing data"}), 400
+
+    received_mac = data.get("mac")
+    data_str = data.get("data")
+
+    if not received_mac or not data_str:
+        return jsonify({"error": "Invalid callback data"}), 400
+
+    mac = generate_hmac(data_str, ZALOPAY_CONFIG["key2"])
+    if received_mac != mac:
+        return jsonify({"return_code": -1, "return_message": "mac not equal"}), 400
+
+    data_json = json.loads(data_str)
+    print(f"Update order's status to success for app_trans_id: {data_json['app_trans_id']}")
+
+    return jsonify({"return_code": 1, "return_message": "success"}), 200
+
+@app.route('/payment/CheckZaloPay', methods=['POST'])
+def check_zalopay_order_status():
+    app_trans_id = request.form.get("app_trans_id")
+
+    if not app_trans_id:
+        return jsonify({"error": "Missing app_trans_id"}), 400
+
+    data = f"{ZALOPAY_CONFIG['app_id']}|{app_trans_id}|{ZALOPAY_CONFIG['key1']}"
+    mac = generate_hmac(data, ZALOPAY_CONFIG["key1"])
+
+    payload = {
+        "app_id": ZALOPAY_CONFIG["app_id"],
+        "app_trans_id": app_trans_id,
+        "mac": mac,
+    }
+
+    try:
+        response = requests.post(
+            ZALOPAY_CONFIG["query_order_endpoint"],
+            data=payload,  # Changed to `data` for form-encoded content
+            headers={"Content-Type": "application/x-www-form-urlencoded"},
+        )
+        return jsonify(response.json()), response.status_code
+    except requests.RequestException as e:
+        return jsonify({"error": str(e)}), 500
 
 
 @app.route('/register', methods=['POST'])
@@ -37,6 +139,16 @@ def get_user():
         return jsonify({"errCode": 0, "user": user}), 200
     else:
         return jsonify({"errCode": 1, "message": "User not found"}), 404
+@app.route('/api/admin', methods=['GET'])
+def get_admin():
+    user_id = session.get('name')
+    if not user_id:
+        return jsonify({"errCode": 1, "message": "Not authenticated"}), 401
+    user = get_admin_by_name(user_id)  
+    if user:
+        return jsonify({"errCode": 0, "user": user}), 200
+    else:
+        return jsonify({"errCode": 1, "message": "Admin not found"}), 404
 
 
 @app.route('/users', methods=['GET'])
@@ -64,7 +176,7 @@ def api_update_user(user_id):
         return jsonify({"error": "No information to update"}), 400
 
     update_user(user_id, name=name, email=email, password=password, phone=phone)
-    return jsonify({"message": "User information successfully updated"}), 200
+    return jsonify({"errCode":0,"message": "User information successfully updated"}), 200
 
 @app.route('/users/<int:user_id>', methods=['DELETE'])
 def api_delete_user(user_id):
@@ -73,6 +185,7 @@ def api_delete_user(user_id):
 
 @app.route('/login',  methods=['POST'])
 def api_login():
+    session.clear()  
     data = request.form
     print("Received data:", data) 
     email = data.get('Email')
@@ -84,6 +197,24 @@ def api_login():
     user = login(email, password)
     if user:
         session['user_id'] = user['UserID']  
+        session['email'] = email
+        return jsonify({"errCode":0,"user": user}), 200
+    else:
+        return jsonify({"error": "Wrong email or password"}), 404
+@app.route('/loginAdmin',  methods=['POST'])
+def api_loginAdmin():
+    session.clear()  
+    data = request.form
+    print("Received data:", data) 
+    email = data.get('Email')
+    password = data.get('Password')
+    print(f"Email: {email}, Password: {password}") 
+    if not email or not password:
+        return jsonify({"error": "Missing email or password"}), 400
+
+    user = loginAdmin(email, password)
+    if user:
+        session['name'] = user['Name']  
         session['email'] = email
         return jsonify({"errCode":0,"user": user}), 200
     else:
@@ -124,7 +255,6 @@ def api_get_room_by_id(room_id):
 @app.route('/rooms/<int:room_id>', methods=['PUT'])
 def api_update_room(room_id):
     data = request.form
-   
     room_type = data.get('RoomType')
     price = data.get('Price')
     availability = data.get('Availability')
@@ -244,8 +374,8 @@ def api_create_payment():
     data = request.form
     booking_id = data.get('BookingID')
     user_id = data.get('UserID')
-    amount = data.get('Amount')
-    payment_method = data.get('PaymentMethod')
+    amount = data.get('TotalPrice')
+    payment_method = data.get('methodPay')
     payment_status = data.get('PaymentStatus')
     
     if not all([booking_id, user_id, amount, payment_method, payment_status]):
@@ -305,8 +435,8 @@ def api_create_booking():
     if not all([user_id, room_id, check_in_date, check_out_date, total_price, booking_status]):
         return jsonify({"error": "Missing required information"}), 400
 
-    create_booking(user_id, room_id, check_in_date, check_out_date, total_price, booking_status)
-    return jsonify({"message": "Booking successfully created"}), 201
+    new_booking_id = create_booking(user_id, room_id, check_in_date, check_out_date, total_price, booking_status)
+    return jsonify({"errCode":0,"message": "Booking successfully created","id_booking": new_booking_id}), 201
 
 @app.route('/bookings', methods=['GET'])
 def api_get_bookings():
@@ -317,7 +447,7 @@ def api_get_bookings():
 def api_get_booking_by_id(booking_id):
     booking = get_booking_by_id(booking_id)
     if booking:
-        return jsonify(booking), 200
+        return jsonify({"errCode":0,"booking":booking}), 200
     else:
         return jsonify({"error": "Booking not found"}), 404
 

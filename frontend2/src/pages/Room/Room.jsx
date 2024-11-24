@@ -8,18 +8,28 @@ import "react-datepicker/dist/react-datepicker.css";
 import { GetAllRooms } from "../../services/apiService";
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
 import { UserContext } from "../../Context/UserProvider";
+import { toast } from "react-toastify";
 const Room = () => {
 	const history = useHistory();
 	const [rooms, setRooms] = useState([]);
 	const GetDataRooms = async () => {
 		let response = await GetAllRooms();
-		setRooms(response);
+		const sortedRooms = response.sort(
+			(a, b) => a.Availability - b.Availability
+		);
+		setRooms(sortedRooms);
 	};
+
+	const { formValues } = useContext(UserContext);
 	useEffect(() => {
 		GetDataRooms();
 	}, []);
 	const HandleClick = (data) => {
-		history.push(`/rooms/id_room=${data.RoomID}`, data);
+		if (formValues.Availability === "0") {
+			history.push(`/rooms/id_room=${data.RoomID}`, data);
+		} else {
+			toast.error("Room has Booked");
+		}
 	};
 	return (
 		<>
@@ -47,22 +57,33 @@ const Room = () => {
 						{rooms &&
 							rooms.length > 0 &&
 							rooms.map((item, index) => {
+								const isBooked = item.Availability !== 0; // Kiểm tra trạng thái
 								return (
-									<div className="col-lg-4 col-md-6 mb-4 d-flex align-items-stretch">
-										<div className="room-item">
+									<div
+										className={`col-lg-4 col-md-6 mb-4 d-flex align-items-stretch`}
+										key={index}
+									>
+										<div className={`room-item ${isBooked ? "booked" : ""}`}>
 											<img src={room1} alt="" />
+											{isBooked && <div className="booked-overlay">Booked</div>}
 											<div className="ri-text">
 												<h4>{item.RoomType}</h4>
 												<h3>
 													{item.Price}$<span>/Pernight</span>
 												</h3>
-												<button
-													type="button"
-													onClick={() => HandleClick(item)}
-													className="btn btn-primary"
-												>
-													More Details
-												</button>
+												{!isBooked ? (
+													<button
+														type="button"
+														onClick={() => HandleClick(item)}
+														className="btn btn-primary"
+													>
+														More Details
+													</button>
+												) : (
+													<button className="btn btn-secondary" disabled>
+														Unavailable
+													</button>
+												)}
 											</div>
 										</div>
 									</div>

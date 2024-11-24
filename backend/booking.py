@@ -26,8 +26,11 @@ def create_booking(user_id, room_id, check_in_date, check_out_date, total_price,
     """
     cursor.execute(sql, (user_id, room_id, check_in_date, check_out_date, total_price, booking_status))
     connection.commit()
+    cursor.execute("SELECT LAST_INSERT_ID()")
+    booking_id = cursor.fetchone()[0]
     cursor.close()
     connection.close()
+    return booking_id
 
 def get_Bookings():
     connection = get_db_connection()
@@ -42,11 +45,11 @@ def get_Bookings():
 def get_booking_by_id(booking_id):
     connection = get_db_connection()
     cursor = connection.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM booking WHERE BookingID = %s", (booking_id,))
-    booking = cursor.fetchone()
+    cursor.execute("SELECT * FROM booking WHERE UserID = %s", (booking_id,))
+    bookings = cursor.fetchall()  
     cursor.close()
     connection.close()
-    return booking_to_json(booking) if booking else None
+    return [booking_to_json(booking) for booking in bookings]
 
 # Update a booking record
 def update_booking(booking_id, room_id=None, check_in_date=None, check_out_date=None, total_price=None, booking_status=None):

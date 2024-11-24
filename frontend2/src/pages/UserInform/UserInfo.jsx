@@ -1,109 +1,128 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-
-
-const GetDataUser = async () => {
-
-  return {
-    firstName: "funda",
-    lastName: "coder",
-    phone: "777888999",
-    email: "funda@gmail.com",
-  };
-};
-
+import { UserContext } from "../../Context/UserProvider";
+import "../UserInform/userInfo.css";
+import { EditUserService } from "../../services/userService";
+import { toast } from "react-toastify";
 const UserInfo = () => {
-  const [user, setUser] = useState({
-    firstName: "",
-    lastName: "",
-    phone: "",
-    email: "",
-    gender: "",
-  });
+	const { user, loginContext, fetchUser } = useContext(UserContext);
+	const [isShowPass, SetIsShowPass] = useState(false);
+	const [formValues, setFormValues] = useState({
+		Email: "",
+		Password: "",
+		Name: "",
+		Phone: "",
+	});
+	useEffect(() => {
+		if (user.account) {
+			setFormValues({
+				Email: user.account.Email || "",
+				Password: "",
+				Name: user.account.Name || "",
+				Phone: user.account.Phone || "",
+			});
+		}
+	}, [user.account]);
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		console.log("Updated Profile Data:", formValues);
+	};
 
-
-  const fetchData = async () => {
-    const response = await GetDataUser();
-    setUser(response);
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setUser((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
-
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Updated Profile Data:", user);
-  };
-
-  return (
-    <div className="container mt-5 mb-5">
-      <div className="card shadow">
-        <div className="card-body">
-          <h3 className="card-title mb-4">My Profile</h3>
-          <form onSubmit={handleSubmit}>
-            <div className="row mb-3">
-              <div className="col-md-6">
-                <label className="form-label">First Name</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  name="firstName"
-                  value={user.firstName}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="col-md-6">
-                <label className="form-label">Last Name</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  name="lastName"
-                  value={user.lastName}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-            <div className="row mb-3">
-              <div className="col-md-6">
-                <label className="form-label">Phone</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  name="phone"
-                  value={user.phone}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="col-md-6">
-                <label className="form-label">Email address</label>
-                <input
-                  type="email"
-                  className="form-control"
-                  name="email"
-                  value={user.email}
-                  disabled
-                />
-              </div>
-            </div>
-            <button type="submit" className="btn btn-primary">
-              Update Profile
-            </button>
-          </form>
-        </div>
-      </div>
-    </div>
-  );
+	const handleInputChange = (e) => {
+		const { name, value } = e.target;
+		setFormValues({
+			...formValues,
+			[name]: value,
+		});
+	};
+	const HandleShowHide = () => {
+		SetIsShowPass(!isShowPass);
+	};
+	const HandleUpdate = async () => {
+		let response = await EditUserService(user.account.UserID, formValues);
+		if (response && response.errCode === 0) {
+			toast.success("Update Success");
+			let data = {
+				isAuthenticated: true,
+				account: formValues,
+				isLoading: false,
+			};
+			loginContext(data);
+			fetchUser();
+		} else {
+			toast.error(response.error);
+		}
+	};
+	return (
+		<div className="container mt-5 mb-5">
+			<div className="card shadow">
+				<div className="card-body">
+					<h3 className="card-title mb-4">My Profile</h3>
+					<div className="row mb-3">
+						<div className="col-md-6">
+							<label className="form-label">Full Name</label>
+							<input
+								type="text"
+								className="form-control"
+								name="Name"
+								onChange={handleInputChange}
+								value={formValues.Name}
+							/>
+						</div>
+						<div className="col-md-6">
+							<label className="form-label">PassWord</label>
+							<div className="input-wrapper">
+								<input
+									type={isShowPass ? "text" : "password"}
+									className="form-control"
+									onChange={handleInputChange}
+									name="Password"
+									value={formValues.Password}
+								/>
+								<span className="eye-icon" onClick={() => HandleShowHide()}>
+									<i
+										className={
+											isShowPass ? "far fa-eye-slash eye" : "far fa-eye eye"
+										}
+									></i>
+								</span>
+							</div>
+						</div>
+					</div>
+					<div className="row mb-3">
+						<div className="col-md-6">
+							<label className="form-label">Phone</label>
+							<input
+								type="text"
+								className="form-control"
+								name="Phone"
+								value={formValues.Phone}
+								onChange={handleInputChange}
+							/>
+						</div>
+						<div className="col-md-6">
+							<label className="form-label">Email address</label>
+							<input
+								type="email"
+								className="form-control"
+								name="Email"
+								value={formValues.Email}
+								onChange={handleInputChange}
+								disabled
+							/>
+						</div>
+					</div>
+					<button
+						type="button"
+						onClick={() => HandleUpdate()}
+						className="btn btn-primary"
+					>
+						Update Profile
+					</button>
+				</div>
+			</div>
+		</div>
+	);
 };
 
 export default UserInfo;

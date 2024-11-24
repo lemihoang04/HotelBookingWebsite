@@ -1,7 +1,12 @@
 import React from "react";
 import "../Login/login.css";
 import blogImage from "../../assets/images/blog-1.jpg";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 const Register = () => {
+	const history = useHistory();
+	const HandleLogin = () => {
+		history.push("/login");
+	};
 	return (
 		<div className="login-page">
 			<div className="wrapper">
@@ -13,7 +18,7 @@ const Register = () => {
 
 						<div className="col-md-6 right">
 							<div className="input-box">
-								<header>Login</header>
+								<header>Register</header>
 								<div className="input-field">
 									<input
 										type="text"
@@ -24,6 +29,28 @@ const Register = () => {
 										autoComplete="off"
 									/>
 									<label htmlFor="email">Email</label>
+								</div>
+								<div className="input-field">
+									<input
+										type="text"
+										className="input"
+										id="Name"
+										required=""
+										name="Name"
+										autoComplete="off"
+									/>
+									<label htmlFor="Name">Full Name</label>
+								</div>
+								<div className="input-field">
+									<input
+										type="text"
+										className="input"
+										id="Phone"
+										required=""
+										name="Phone"
+										autoComplete="off"
+									/>
+									<label htmlFor="Phone">Phone</label>
 								</div>
 								<div className="input-field">
 									<input
@@ -40,7 +67,8 @@ const Register = () => {
 								</div>
 								<div className="signin">
 									<span>
-										Already have an account? <a href="#">Login here</a>
+										Already have an account?{" "}
+										<button onClick={HandleLogin}>Login here</button>
 									</span>
 								</div>
 							</div>

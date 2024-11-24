@@ -8,7 +8,7 @@ import { LogOutUser } from "../../services/userService";
 
 const NavBar = () => {
 	const location = useLocation();
-	const { user, logoutContext } = useContext(UserContext);
+	const { user, logoutContext, admin } = useContext(UserContext);
 	const history = useHistory();
 	const HanldeLogout = async () => {
 		let data = await LogOutUser();
@@ -57,7 +57,11 @@ const NavBar = () => {
 													About Us
 												</NavLink>
 											</li>
-											{user && user.isAuthenticated === false ? (
+
+											{user &&
+											user.isAuthenticated === false &&
+											admin &&
+											admin.isAuthenticated === false ? (
 												<li className="mx-3">
 													<NavLink to="/login" activeClassName="active">
 														Login
@@ -69,17 +73,17 @@ const NavBar = () => {
 													className="NavDropdown mt-1 menu-item-dropdown"
 													id="basic-nav-dropdown"
 												>
-													<NavDropdown.Item>
-														<span>My Bookings</span>
+													<NavDropdown.Item as={NavLink} to="/mybookings">
+														My Bookings
 													</NavDropdown.Item>
 													<NavDropdown.Divider />
-													<NavDropdown.Item as={NavLink} to="/infomation">
+													<NavDropdown.Item as={NavLink} to="/information">
 														My Profile
 													</NavDropdown.Item>
 
 													<NavDropdown.Divider />
-													<NavDropdown.Item>
-														<span onClick={() => HanldeLogout()}>Log out</span>
+													<NavDropdown.Item onClick={() => HanldeLogout()}>
+														<span>Log out</span>
 													</NavDropdown.Item>
 												</NavDropdown>
 											)}

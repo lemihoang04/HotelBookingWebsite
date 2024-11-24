@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
-import { LoginUser } from "../../services/userService";
+import { LoginAdmin } from "../../services/userService";
 import blogImage from "../../assets/images/blog-1.jpg";
+import { UserContext } from "../../Context/UserProvider";
 const Login_Admin = () => {
+	const { loginAdmin } = useContext(UserContext);
 	const history = useHistory();
 	const [formValues, setFormValues] = useState({
 		Email: "",
@@ -49,9 +51,15 @@ const Login_Admin = () => {
 		}
 
 		try {
-			const response = await LoginUser(formValues);
+			const response = await LoginAdmin(formValues);
 			if (response && response.errCode === 0) {
 				toast.success("Success Login");
+				let data = {
+					isAuthenticated: true,
+					account: response.user,
+					isLoading: false,
+				};
+				loginAdmin(data);
 				history.push("/admin");
 			} else {
 				toast.error(response.error);

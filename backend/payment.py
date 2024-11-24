@@ -81,7 +81,7 @@ def update_payment(payment_id, amount=None, payment_method=None, payment_status=
 def delete_payment(payment_id):
     connection = get_db_connection()
     cursor = connection.cursor()
-    cursor.execute("DELETE FROM payment WHERE PaymentID = %s", (payment_id,))
+    cursor.execute("DELETE FROM payment WHERE BookingID = %s", (payment_id,))
     connection.commit()
     cursor.close()
     connection.close()

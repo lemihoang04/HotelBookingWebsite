@@ -9,7 +9,13 @@ def user_to_json(user_data):
         "Phone": user_data['Phone'],
         "CreatedAt": user_data['CreatedAt'].isoformat(),
     }
-
+def admin_to_json(user_data):
+    return {
+        "Name": user_data['name'],
+        "Email": user_data['Email'],
+        "Phone": user_data['phone'],
+        "CreatedAt": user_data['CreatedAt'].isoformat(),
+    }
 def create_user(name, email, password, phone):
     connection = get_db_connection()
     cursor = connection.cursor()
@@ -36,6 +42,14 @@ def get_user_by_id(user_id):
     cursor.close()
     connection.close()
     return user_to_json(user) if user else None
+def get_admin_by_name(name):
+    connection = get_db_connection()
+    cursor = connection.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM admin WHERE name = %s", (name,))
+    user = cursor.fetchone()
+    cursor.close()
+    connection.close()
+    return admin_to_json(user) if user else None
 
 def login(email, password):
     connection = get_db_connection()
@@ -46,6 +60,15 @@ def login(email, password):
     connection.close()
 
     return user_to_json(user) if user else None
+def loginAdmin(email, password):
+    connection = get_db_connection()
+    cursor = connection.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM admin WHERE Email = %s AND Password = %s", (email, password))
+    user = cursor.fetchone()
+    cursor.close()
+    connection.close()
+
+    return admin_to_json(user) if user else None
 
 def update_user(user_id, name=None, email=None, password=None, phone=None):
     connection = get_db_connection()
