@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { CreateRoom } from "../../../services/apiService";
+import { toast } from "react-toastify";
 
 const AddRooms = () => {
   const [roomData, setRoomData] = useState({
@@ -15,18 +17,29 @@ const AddRooms = () => {
   };
 
   const handleFileChange = (e) => {
-    const files = Array.from(e.target.files);
-    setRoomData((prev) => ({
-      ...prev,
-      pictures: [...prev.pictures, ...files], 
-    }));
+    const file = e.target.files[0]; 
+    if (file) {
+      setRoomData((prev) => ({
+        ...prev,
+        pictures: [file], 
+      }));
+    }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(roomData);
-
-
+  
+    try {
+      const response = await CreateRoom(roomData);
+      if(response && response.errCode === 0){
+        toast.success(response.message);
+      }
+      else{
+        toast.error(response.error);
+      }
+    } catch (error) {
+      toast.error("Error adding room:", error);
+    }
   };
 
   return (
@@ -106,38 +119,35 @@ const AddRooms = () => {
         </div>
 
         <div className="mb-3">
-          <label htmlFor="pictures" className="form-label">
-            Pictures
-          </label>
-          <input
-            type="file"
-            className="form-control"
-            id="pictures"
-            name="pictures"
-            multiple 
-            onChange={handleFileChange}
-          />
-        </div>
+        <label htmlFor="pictures" className="form-label">
+          Picture
+        </label>
+        <input
+          type="file"
+          className="form-control"
+          id="pictures"
+          name="pictures"
+          onChange={handleFileChange} 
+        />
+      </div>
 
-        <div className="mb-3">
-          <label className="form-label">Preview Pictures</label>
-          <div className="d-flex flex-wrap">
-            {roomData.pictures.map((picture, index) => (
-              <img
-                key={index}
-                src={URL.createObjectURL(picture)} 
-                alt={`Preview ${index + 1}`}
-                style={{
-                  width: "100px",
-                  height: "100px",
-                  objectFit: "cover",
-                  marginRight: "10px",
-                  marginBottom: "10px",
-                }}
-              />
-            ))}
-          </div>
+      <div className="mb-3">
+        <label className="form-label">Preview Picture</label>
+        <div>
+          {roomData.pictures.length > 0 && (
+            <img
+              src={URL.createObjectURL(roomData.pictures[0])} 
+              alt="Preview"
+              style={{
+                width: "100px",
+                height: "100px",
+                objectFit: "cover",
+                marginRight: "10px",
+              }}
+            />
+          )}
         </div>
+      </div>
 
         <button type="submit" className="btn btn-primary">
           Add Room

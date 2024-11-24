@@ -10,14 +10,19 @@ def room_to_json(room_data):
         "Features": room_data['Features']
     }
 
-def create_room(RoomType, Price, Availability, Features):
+def create_room(RoomID ,RoomType, Price, Availability, Features, picture_path):
     connection = get_db_connection()
     cursor = connection.cursor()
-    sql = "INSERT INTO room (RoomType, Price, Availability, Features) VALUES (%s, %s, %s, %s)"
-    cursor.execute(sql, (RoomType, Price, Availability, Features))
+
+    sql = """
+    INSERT INTO room (RoomID, RoomType, Price, Availability, Features, Image)
+    VALUES (%s, %s, %s, %s, %s, %s)
+    """
+    cursor.execute(sql, (RoomID, RoomType, Price, Availability, Features, picture_path))
     connection.commit()
     cursor.close()
     connection.close()
+
 
 def get_all_room():
     connection = get_db_connection()
