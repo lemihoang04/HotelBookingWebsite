@@ -6,28 +6,57 @@ import {
 	DeleteBookings,
 	DeletePayments,
 	GetBookingID,
+	GetPaymentID,
 } from "../../services/apiService";
 import { UserContext } from "../../Context/UserProvider";
 import { toast } from "react-toastify";
 
 const Bookings = () => {
 	const [bookings, setBookings] = useState([]);
-	const { user, getformValue } = useContext(UserContext);
+	const { user, getformValue, formValues } = useContext(UserContext);
 	const [showModal, setShowModal] = useState(false);
 	const [selectedBooking, setSelectedBooking] = useState(null);
 	const [dataValue, setDataValue] = useState(
 		JSON.parse(localStorage.getItem("formValues")) || {}
 	);
 	const fetchBooking = async () => {
-		let response = await GetBookingID(user.account.UserID);
-		if (response && response.errCode === 0) {
-			let updatedBookings = response.booking.map((booking) => ({
-				...booking,
-				Username: user.account.Name,
-			}));
-			setBookings(updatedBookings);
+		try {
+			let response = await GetBookingID(user.account.UserID);
+			if (response && response.errCode === 0) {
+				let updatedBookings = await Promise.all(
+					response.booking.map(async (booking) => {
+						try {
+							let paymentResponse = await GetPaymentID(booking.BookingID);
+							let payment = paymentResponse[0] || {};
+							return {
+								...booking,
+								Username: user.account.Name,
+								PaymentStatus: payment.PaymentStatus || "Unknown",
+							};
+						} catch (error) {
+							console.error(
+								`Error fetching payment for BookingID ${booking.BookingID}:`,
+								error
+							);
+							return {
+								...booking,
+								Username: user.account.Name,
+								PaymentStatus: "Error fetching payment",
+							};
+						}
+					})
+				);
+				setBookings(updatedBookings);
+			} else {
+				console.error("Error fetching bookings:", response);
+				toast.error("Failed to fetch bookings.");
+			}
+		} catch (error) {
+			console.error("Error in fetchBooking:", error);
+			toast.error("An error occurred while fetching bookings.");
 		}
 	};
+
 	useEffect(() => {
 		fetchBooking();
 	}, []);
@@ -75,6 +104,7 @@ const Bookings = () => {
 						<th>Check Out Date</th>
 						<th>Total Price</th>
 						<th>Booking Status</th>
+						<th>Payment Status</th>
 						<th>Booking Time</th>
 						<th>Action</th>
 					</tr>
@@ -90,6 +120,7 @@ const Bookings = () => {
 								<td>{booking.CheckOutDate}</td>
 								<td>${booking.TotalPrice}</td>
 								<td>{booking.BookingStatus}</td>
+								<td>{booking.PaymentStatus}</td>
 								<td>{booking.Timestamp}</td>
 								<td>
 									<button

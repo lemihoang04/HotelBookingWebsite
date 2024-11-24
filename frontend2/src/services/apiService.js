@@ -13,9 +13,37 @@ const GetAllRooms = () => {
 			console.error(error);
 		});
 };
+const GetPaymentID = (id_booking) => {
+	return axios
+		.get(`/payments/${id_booking}`, {
+			headers: {
+				"Content-Type": "application/x-www-form-urlencoded",
+			},
+		})
+		.then((response) => {
+			return response;
+		})
+		.catch((error) => {
+			console.error(error);
+		});
+};
 const GetBookingID = (id) => {
 	return axios
 		.get(`/bookings/${id}`, {
+			headers: {
+				"Content-Type": "application/x-www-form-urlencoded",
+			},
+		})
+		.then((response) => {
+			return response;
+		})
+		.catch((error) => {
+			console.error(error);
+		});
+};
+const GetAllBookings = () => {
+	return axios
+		.get("/bookings", {
 			headers: {
 				"Content-Type": "application/x-www-form-urlencoded",
 			},
@@ -83,6 +111,21 @@ const CreatePayment = (form) => {
 			console.error(error);
 		});
 };
+const UpdatePayment = (booking_id) => {
+	return axios
+		.put(`/payments/${booking_id}`, {
+			headers: {
+				"Content-Type": "application/x-www-form-urlencoded",
+			},
+		})
+		.then((response) => {
+			return response;
+		})
+		.catch((error) => {
+			console.error(error);
+		});
+};
+
 const CheckPayment = async (apptransid) => {
 	return axios.post(
 		"/payment/CheckZaloPay",
@@ -110,6 +153,7 @@ const ChangeRoomAva = async (form) => {
 };
 export {
 	GetAllRooms,
+	GetPaymentID,
 	GetBookingID,
 	DeleteBookings,
 	CreateBooking,
@@ -118,4 +162,6 @@ export {
 	PaymentZaloPay,
 	DeletePayments,
 	ChangeRoomAva,
+	GetAllBookings,
+	UpdatePayment,
 };

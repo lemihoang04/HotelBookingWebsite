@@ -54,28 +54,22 @@ def get_payment_by_id(payment_id):
     return payment_to_json(payment) if payment else None
 
 # Update a payment record
-def update_payment(payment_id, amount=None, payment_method=None, payment_status=None):
+def update_payment_status(booking_id):
+    # Kết nối tới cơ sở dữ liệu
     connection = get_db_connection()
     cursor = connection.cursor()
-    updates = []
-    values = []
 
-    if amount is not None:
-        updates.append("Amount = %s")
-        values.append(amount)
-    if payment_method is not None:
-        updates.append("PaymentMethod = %s")
-        values.append(payment_method)
-    if payment_status is not None:
-        updates.append("PaymentStatus = %s")
-        values.append(payment_status)
+    # Câu lệnh SQL cập nhật
+    sql = "UPDATE payment SET PaymentStatus = 'Completed' WHERE BookingID = %s"
 
-    values.append(payment_id)
-    sql = f"UPDATE payment SET {', '.join(updates)} WHERE PaymentID = %s"
-    cursor.execute(sql, tuple(values))
+    # Thực thi câu lệnh SQL
+    cursor.execute(sql,  (booking_id,))
     connection.commit()
+
+    # Đóng kết nối
     cursor.close()
     connection.close()
+
 
 # Delete a payment record
 def delete_payment(payment_id):
