@@ -85,8 +85,8 @@ const Login = () => {
 			<div className="wrapper">
 				<div className="container main">
 					<div className="row">
-						<div className="col-md-6 mt-5 side-image">
-							<img src={blogImage} alt="" />;
+						<div className="col-md-6 mt-3 side-image">
+							<img className="login_img" src={blogImage} alt="" />;
 						</div>
 						<div className="col-md-6 right">
 							<div className="input-box">

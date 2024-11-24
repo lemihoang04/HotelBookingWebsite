@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import AdminDashboard from "../Admin/AdminDashboard";
 import SelectionType from "./Selection_type";
-import AllRooms from "./AllRooms";
-import AddRooms from "./AddRooms";
+import AllRooms from "./RoomManage/AllRooms";
+import AddRooms from "./AddRoom/AddRooms";
 import ManageUsers from "./UserManage/ManageUsers";
-import AllBookings from "./AllBookings";
+import AllBookings from "./AllBooking/AllBookings";
 
 const Admin = () => {
 	const [activeMenu, setActiveMenu] = useState("dashboard");

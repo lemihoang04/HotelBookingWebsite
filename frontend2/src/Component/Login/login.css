@@ -90,8 +90,8 @@
 	transition: 0.5s;
 }
 
-.login-page .input-field input:focus ~ label,
-.login-page .input-field input:valid ~ label {
+.login-page .input-field input:focus~label,
+.login-page .input-field input:valid~label {
 	top: -10px;
 	font-size: 13px;
 	color: #5d5076;
@@ -127,6 +127,11 @@
 	font-weight: 700;
 	color: #000;
 	transition: 0.5s;
+}
+
+.login_img {
+	width: 100%;
+	border-radius: 10px;
 }
 
 .login-page span a:hover {

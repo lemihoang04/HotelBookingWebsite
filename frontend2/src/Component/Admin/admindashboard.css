@@ -1,38 +1,72 @@
 .content {
 	padding: 20px;
+
+	min-height: 100vh;
+
 }
 
-.dashboard-information {
-	text-align: center;
-}
+
 
 .website-dashboard-manager {
 	font-size: 2rem;
 	font-weight: bold;
 	margin-bottom: 20px;
+	color: #333;
 }
+
 
 .metrics-overview {
 	display: flex;
 	justify-content: space-around;
-	align-items: center;
+	align-items: stretch;
+	gap: 20px;
+
+	flex-wrap: wrap;
+
 }
 
+/* Thẻ chung */
 .count {
 	cursor: pointer;
 	padding: 20px;
 	border-radius: 10px;
 	text-align: center;
-	width: 150px;
+	width: 250px;
+	transition: transform 0.3s ease, box-shadow 0.3s ease;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
+
+.count:hover {
+	transform: translateY(-5px);
+	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
 
 .users {
 	background-color: #b6cee7;
+	color: #004d99;
+
 }
 
 .rooms {
 	background-color: #f7cb79;
+	color: #b57300;
 }
+
+.bookings {
+	background-color: #e7b9f3;
+	color: #7a007a;
+}
+
+
+.bi {
+	font-size: 2rem;
+	margin-bottom: 10px;
+	display: block;
+	color: inherit;
+
+}
+
 
 .recruitment-stats {
 	margin-top: 10px;
@@ -43,13 +77,28 @@
 	color: #666;
 }
 
-.placeholder {
+.placeholder,
+.number-display .number {
 	font-size: 2rem;
 	font-weight: bold;
+	color: inherit;
+
 }
 
-.bi {
-	font-size: 2rem;
-	margin-bottom: 10px;
-	display: block;
+/* Responsive cho màn hình nhỏ */
+@media (max-width: 768px) {
+	.metrics-overview {
+		flex-direction: column;
+		gap: 15px;
+		/* Giảm khoảng cách giữa các thẻ */
+	}
+
+	.count {
+		width: 100%;
+		/* Thẻ chiếm toàn bộ chiều ngang */
+		max-width: 300px;
+		/* Giới hạn chiều rộng tối đa */
+		margin: 0 auto;
+		/* Căn giữa */
+	}
 }

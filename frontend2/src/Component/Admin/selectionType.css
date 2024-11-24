@@ -39,3 +39,12 @@
 	color: #adb5bd;
 	text-transform: uppercase;
 }
+
+
+
+.admin-dropdown {
+	position: absolute;
+	bottom: 20px;
+	left: 50%;
+	transform: translateX(-50%);
+}

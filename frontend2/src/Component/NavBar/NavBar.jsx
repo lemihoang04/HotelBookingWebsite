@@ -42,17 +42,17 @@ const NavBar = () => {
 								<div className="nav-menu">
 									<nav className="mainmenu">
 										<ul className="d-flex justify-content-start align-items-center mb-0">
-											<li className="mx-3">
+											<li className="mx-1">
 												<NavLink to="/" exact activeClassName="active">
 													Home
 												</NavLink>
 											</li>
-											<li className="mx-3">
+											<li className="mx-1">
 												<NavLink to="/rooms" activeClassName="active">
 													Rooms
 												</NavLink>
 											</li>
-											<li className="mx-3">
+											<li className="mx-1">
 												<NavLink to="/about-us" activeClassName="active">
 													About Us
 												</NavLink>
@@ -62,7 +62,7 @@ const NavBar = () => {
 											user.isAuthenticated === false &&
 											admin &&
 											admin.isAuthenticated === false ? (
-												<li className="mx-3">
+												<li className="mx-1">
 													<NavLink to="/login" activeClassName="active">
 														Login
 													</NavLink>

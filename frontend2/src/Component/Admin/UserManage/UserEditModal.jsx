@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Modal, Form } from "react-bootstrap";
 
 const EditUserModal = ({ toggle, isOpen, user, onSave }) => {
   const [formData, setFormData] = useState(user || {});
 
-  useState(() => {
-    if (user) setFormData(user);
+  useEffect(() => {
+    if (user) {
+      setFormData(user);
+    }
   }, [user]);
 
   const handleChange = (e) => {
@@ -14,6 +16,12 @@ const EditUserModal = ({ toggle, isOpen, user, onSave }) => {
   };
 
   const handleSave = () => {
+    // Validate fields
+    if (!formData.Name || !formData.Email || !formData.Phone) {
+      alert("Please fill all required fields.");
+      return;
+    }
+
     onSave(formData);
     toggle();
   };
@@ -25,40 +33,39 @@ const EditUserModal = ({ toggle, isOpen, user, onSave }) => {
       </Modal.Header>
       <Modal.Body>
         <Form>
-          <Form.Group>
+          <Form.Group controlId="Name">
             <Form.Label>Name</Form.Label>
             <Form.Control
               type="text"
               name="Name"
+              placeholder="Enter name"
               value={formData.Name || ""}
               onChange={handleChange}
+              required
             />
           </Form.Group>
-          <Form.Group>
+
+          <Form.Group controlId="Email">
             <Form.Label>Email</Form.Label>
             <Form.Control
               type="email"
               name="Email"
+              placeholder="Enter email"
               value={formData.Email || ""}
               onChange={handleChange}
+              required
             />
           </Form.Group>
-          <Form.Group>
+
+          <Form.Group controlId="Phone">
             <Form.Label>Phone</Form.Label>
             <Form.Control
               type="text"
               name="Phone"
+              placeholder="Enter phone number"
               value={formData.Phone || ""}
               onChange={handleChange}
-            />
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Password</Form.Label>
-            <Form.Control
-              type="password"
-              name="Password"
-              value={formData.Password || ""}
-              onChange={handleChange}
+              required
             />
           </Form.Group>
         </Form>
