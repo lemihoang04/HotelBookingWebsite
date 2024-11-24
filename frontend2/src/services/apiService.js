@@ -27,6 +27,34 @@ const GetPaymentID = (id_booking) => {
 			console.error(error);
 		});
 };
+const CreateRoom = (form) => {
+	// Tạo một đối tượng FormData để gửi dữ liệu
+	const formData = new FormData();
+
+	// Thêm các trường thông tin phòng vào FormData
+	formData.append("idRoom", form.idRoom);
+	formData.append("roomType", form.roomType);
+	formData.append("price", form.price);
+	formData.append("features", form.features);
+
+	// Thêm ảnh duy nhất vào FormData
+	if (form.pictures.length > 0) {
+		formData.append("picture", form.pictures[0]); // Chỉ thêm tệp đầu tiên
+	}
+
+	return axios
+		.post("/create_room", formData, {
+			headers: {
+				"Content-Type": "multipart/form-data", // Cập nhật header để gửi file
+			},
+		})
+		.then((response) => {
+			return response;
+		})
+		.catch((error) => {
+			console.error(error);
+		});
+};
 const GetBookingID = (id) => {
 	return axios
 		.get(`/bookings/${id}`, {
@@ -153,6 +181,9 @@ const ChangeRoomAva = async (form) => {
 };
 export {
 	GetAllRooms,
+	CreateRoom,
+	GetAllBookings,
+	UpdatePayment,
 	GetPaymentID,
 	GetBookingID,
 	DeleteBookings,
@@ -162,6 +193,4 @@ export {
 	PaymentZaloPay,
 	DeletePayments,
 	ChangeRoomAva,
-	GetAllBookings,
-	UpdatePayment,
 };

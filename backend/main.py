@@ -1,4 +1,6 @@
 from flask import Flask, jsonify, request
+from werkzeug.utils import secure_filename
+import os
 from users import *
 from flask_cors import CORS
 from room import *
@@ -24,6 +26,12 @@ ZALOPAY_CONFIG = {
     "create_order_endpoint": "https://sb-openapi.zalopay.vn/v2/create",
     "query_order_endpoint": "https://sb-openapi.zalopay.vn/v2/query",
 }
+UPLOAD_FOLDER = 'backend/uploads'
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 
 def generate_hmac(data, key):
     return hmac.new(key.encode(), data.encode(), hashlib.sha256).hexdigest()
@@ -227,17 +235,39 @@ def api_logout():
 
 @app.route('/create_room', methods=['POST'])
 def api_create_room():
-    data = request.form
-    RoomType = data.get('RoomType')
-    Price = data.get('Price')
-    Availability = data.get('Availability')
-    Features = data.get('Features')
+    data = request.form  
+    RoomID = data.get('idRoom')
+    RoomType = data.get('roomType')
+    Price = data.get('price')
+    Availability = 1
+    Features = data.get('features')
     
-    if not all([RoomType, Price, Availability, Features]):
-        return jsonify({"error": "Missing required information"}), 400
+    if not all([RoomID, RoomType, Price, Availability, Features]):
+        return jsonify({"errCode": 1,
+            "error": "Missing required information"}), 400
+    room = get_room_by_id(RoomID)
+    if (room):
+        return jsonify({"errCode": 1,
+            "error": "RoomID already exists "}), 400
+    
+    picture = request.files.get('picture') 
 
-    create_room(RoomType, Price, Availability, Features)
-    return jsonify({"message": "Room successfully created"}), 201
+    if not picture or not allowed_file(picture.filename):
+        return jsonify({"errCode": 1,
+                        "error": "Invalid or missing picture"}), 400
+
+
+    filename = secure_filename(picture.filename)
+    picture_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    picture.save(picture_path)
+
+    create_room(RoomID, RoomType, Price, Availability, Features, picture_path)
+
+    return jsonify({
+        "errCode": 0,
+        "message": "Room successfully created",
+    }), 201
+
 
 @app.route('/rooms', methods=['GET'])
 def api_get_all_rooms():
