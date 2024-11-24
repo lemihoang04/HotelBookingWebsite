@@ -69,6 +69,20 @@ const GetBookingID = (id) => {
 			console.error(error);
 		});
 };
+const GetBookingID_room = (id) => {
+	return axios
+		.get(`/bookings/id_room=${id}`, {
+			headers: {
+				"Content-Type": "application/x-www-form-urlencoded",
+			},
+		})
+		.then((response) => {
+			return response;
+		})
+		.catch((error) => {
+			console.error(error);
+		});
+};
 const GetAllBookings = () => {
 	return axios
 		.get("/bookings", {
@@ -179,6 +193,13 @@ const ChangeRoomAva = async (form) => {
 		},
 	});
 };
+const DeleteRooms = async (id_rooms) => {
+	return axios.delete(`/rooms/${id_rooms}`, {
+		headers: {
+			"Content-Type": "application/x-www-form-urlencoded",
+		},
+	});
+};
 export {
 	GetAllRooms,
 	CreateRoom,
@@ -193,4 +214,6 @@ export {
 	PaymentZaloPay,
 	DeletePayments,
 	ChangeRoomAva,
+	DeleteRooms,
+	GetBookingID_room,
 };

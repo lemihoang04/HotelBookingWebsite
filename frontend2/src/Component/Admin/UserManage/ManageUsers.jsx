@@ -10,6 +10,7 @@ import {
 	GetAllUser,
 } from "../../../services/userService";
 import { toast } from "react-toastify";
+import { GetBookingID } from "../../../services/apiService";
 
 const ManageUsers = () => {
 	const [users, setUsers] = useState([]);
@@ -57,12 +58,17 @@ const ManageUsers = () => {
 		}
 	};
 	const DeleteUserDel = async (idUser) => {
-		let res = await DeleteUser(idUser);
-		if (res && res.errCode === 0) {
-			toast.success(res.message);
-			await fetchUser();
+		let user = await GetBookingID(idUser);
+		if (user && user.errCode === 0) {
+			toast.error("The user currently has a booking");
 		} else {
-			toast.error("Error");
+			let res = await DeleteUser(idUser);
+			if (res && res.errCode === 0) {
+				toast.success(res.message);
+				await fetchUser();
+			} else {
+				toast.error("Error");
+			}
 		}
 	};
 	const indexOfLastItem = currentPage * itemsPerPage;

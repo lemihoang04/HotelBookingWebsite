@@ -8,6 +8,10 @@ import AllBookings from "./AllBooking/AllBookings";
 
 const Admin = () => {
 	const [activeMenu, setActiveMenu] = useState("dashboard");
+	const HandleChangeWindow = () => {
+		setActiveMenu("all-rooms");
+	};
+
 	const renderContent = () => {
 		switch (activeMenu) {
 			case "dashboard":
@@ -15,7 +19,7 @@ const Admin = () => {
 			case "all-rooms":
 				return <AllRooms />;
 			case "add-rooms":
-				return <AddRooms />;
+				return <AddRooms changeWindow={HandleChangeWindow} />;
 			case "manage-users":
 				return <ManageUsers />;
 			case "all-bookings":
@@ -28,7 +32,7 @@ const Admin = () => {
 	return (
 		<div style={{ display: "flex" }}>
 			<SelectionType activeMenu={activeMenu} setActiveMenu={setActiveMenu} />
-			<div className="content-area" >{renderContent()}</div>
+			<div className="content-area">{renderContent()}</div>
 		</div>
 	);
 };

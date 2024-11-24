@@ -51,6 +51,15 @@ def get_booking_by_id(booking_id):
     connection.close()
     return [booking_to_json(booking) for booking in bookings]
 
+def get_booking_by_id_room(id_room):
+    connection = get_db_connection()
+    cursor = connection.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM booking WHERE RoomID = %s", (id_room,))
+    bookings = cursor.fetchall()  
+    cursor.close()
+    connection.close()
+    return [booking_to_json(booking) for booking in bookings]
+
 # Update a booking record
 def update_booking(booking_id, room_id=None, check_in_date=None, check_out_date=None, total_price=None, booking_status=None):
     connection = get_db_connection()

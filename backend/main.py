@@ -244,7 +244,7 @@ def api_create_room():
     RoomID = data.get('idRoom')
     RoomType = data.get('roomType')
     Price = data.get('price')
-    Availability = 1
+    Availability = "0"
     Features = data.get('features')
     
     if not all([RoomID, RoomType, Price, Availability, Features]):
@@ -299,12 +299,12 @@ def api_update_room(room_id):
         return jsonify({"error": "No information to update"}), 400
 
     update_room(room_id,room_type=room_type, price=price, availability=availability, features=features)
-    return jsonify({"message": "Room information successfully updated"}), 200
+    return jsonify({"errCode":0,"message": "Room information successfully updated"}), 200
 
 @app.route('/rooms/<int:room_id>', methods=['DELETE'])
 def api_delete_room(room_id):
     delete_room(room_id)
-    return jsonify({"message": "Room has been deleted"}), 200
+    return jsonify({"errCode":0,"message": "Room has been deleted"}), 200
 
 
 #hotel
@@ -479,6 +479,14 @@ def api_get_bookings():
 @app.route('/bookings/<int:booking_id>', methods=['GET'])
 def api_get_booking_by_id(booking_id):
     booking = get_booking_by_id(booking_id)
+    if booking:
+        return jsonify({"errCode":0,"booking":booking}), 200
+    else:
+        return jsonify({"error": "Booking not found"}), 404
+    
+@app.route('/bookings/id_room=<int:booking_id>', methods=['GET'])
+def api_get_booking_by_id_room(booking_id):
+    booking = get_booking_by_id_room(booking_id)
     if booking:
         return jsonify({"errCode":0,"booking":booking}), 200
     else:
