@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, send_from_directory
 from werkzeug.utils import secure_filename
 import os
 from users import *
@@ -27,8 +27,10 @@ ZALOPAY_CONFIG = {
     "query_order_endpoint": "https://sb-openapi.zalopay.vn/v2/query",
 }
 UPLOAD_FOLDER = 'backend/uploads'
+LOAD_FOLDER = 'uploads'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['LOAD_FOLDER'] = LOAD_FOLDER
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
@@ -232,6 +234,9 @@ def api_logout():
     session.clear()  
     return jsonify({"errCode":0,"message": "Logged out successfully"}), 200
 
+@app.route('/load/<filename>')
+def uploaded_file(filename):
+    return send_from_directory(app.config['LOAD_FOLDER'], filename)
 
 @app.route('/create_room', methods=['POST'])
 def api_create_room():
@@ -261,7 +266,7 @@ def api_create_room():
     picture_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
     picture.save(picture_path)
 
-    create_room(RoomID, RoomType, Price, Availability, Features, picture_path)
+    create_room(RoomID, RoomType, Price, Availability, Features, filename)
 
     return jsonify({
         "errCode": 0,

@@ -7,7 +7,8 @@ def room_to_json(room_data):
         "RoomType": room_data['RoomType'],
         "Price": room_data['Price'],
         "Availability": room_data['Availability'],  # Assuming 'Availability' corresponds to availability status
-        "Features": room_data['Features']
+        "Features": room_data['Features'],
+        "Image": room_data['image']
     }
 
 def create_room(RoomID ,RoomType, Price, Availability, Features, picture_path):

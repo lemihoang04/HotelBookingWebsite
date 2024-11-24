@@ -25,7 +25,7 @@ const Room = () => {
 		GetDataRooms();
 	}, []);
 	const HandleClick = (data) => {
-		if (formValues.Availability === "0") {
+		if (data.Availability == 1) {
 			history.push(`/rooms/id_room=${data.RoomID}`, data);
 		} else {
 			toast.error("Room has Booked");
@@ -57,14 +57,14 @@ const Room = () => {
 						{rooms &&
 							rooms.length > 0 &&
 							rooms.map((item, index) => {
-								const isBooked = item.Availability !== 0; // Kiểm tra trạng thái
+								const isBooked = item.Availability == 0; // Kiểm tra trạng thái
 								return (
 									<div
 										className={`col-lg-4 col-md-6 mb-4 d-flex align-items-stretch`}
 										key={index}
 									>
 										<div className={`room-item ${isBooked ? "booked" : ""}`}>
-											<img src={room1} alt="" />
+										<img src={`http://127.0.0.1:5000/load/${item.Image}`} alt="" />
 											{isBooked && <div className="booked-overlay">Booked</div>}
 											<div className="ri-text">
 												<h4>{item.RoomType}</h4>
