@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
@@ -18,7 +18,7 @@ const Home = () => {
 	};
 	return (
 		<>
-			<section class="hero-section">
+			<section className="hero-section">
 				<Carousel>
 					<Carousel.Item>
 						<img

@@ -30,7 +30,11 @@ const LoginAdmin = (data) => {
 
 const CreateNewUser = (data) => {
 	return axios
-		.post("/api/create-new-user", data)
+		.post("/register", data, {
+			headers: {
+				"Content-Type": "application/x-www-form-urlencoded",
+			},
+		})
 		.then((response) => {
 			return response;
 		})
@@ -38,9 +42,27 @@ const CreateNewUser = (data) => {
 			console.error(error);
 		});
 };
-const GetAllUser = (InputId) => {
+const GetAllUser = () => {
 	return axios
-		.get(`/api/get-all-user?id=${InputId}`)
+		.get("/users", {
+			headers: {
+				"Content-Type": "application/x-www-form-urlencoded",
+			},
+		})
+		.then((response) => {
+			return response;
+		})
+		.catch((err) => {
+			console.log(err);
+		});
+};
+const GetUserID = (userID) => {
+	return axios
+		.get(`/users/${userID}`, {
+			headers: {
+				"Content-Type": "application/x-www-form-urlencoded",
+			},
+		})
 		.then((response) => {
 			return response;
 		})
@@ -65,7 +87,11 @@ const EditUserService = (user_edit, formValue) => {
 	});
 };
 const DeleteUser = (idUser) => {
-	return axios.delete("/api/delete-user", { data: { id: idUser } });
+	return axios.delete(`/users/${idUser}`, {
+		headers: {
+			"Content-Type": "application/x-www-form-urlencoded",
+		},
+	});
 };
 export {
 	LoginUser,
@@ -77,4 +103,5 @@ export {
 	LogOutUser,
 	EditUserService,
 	DeleteUser,
+	GetUserID,
 };

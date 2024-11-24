@@ -4,15 +4,16 @@ import { UserContext } from "../Context/UserProvider";
 
 const AdminRoute = (props) => {
 	const { admin } = useContext(UserContext);
-
-	if (admin && admin.isAuthenticated === true) {
-		return (
-			<div>
-				<Route path={props.path} component={props.component} />
-			</div>
-		);
-	} else {
-		return <Redirect to="/"></Redirect>;
+	if (!admin.isLoading) {
+		if (admin && admin.isAuthenticated === true) {
+			return (
+				<div>
+					<Route path={props.path} component={props.component} />
+				</div>
+			);
+		} else {
+			return <Redirect to="/"></Redirect>;
+		}
 	}
 };
 

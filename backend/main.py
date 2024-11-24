@@ -137,7 +137,7 @@ def api_create_user():
         return jsonify({"error": "Missing required information"}), 400
 
     create_user(name, email, password, phone)
-    return jsonify({"message": "User successfully created"}), 201
+    return jsonify({"errCode":0,"message": "User successfully created"}), 201
 
 @app.route('/api/account', methods=['GET'])
 def get_user():
@@ -191,7 +191,7 @@ def api_update_user(user_id):
 @app.route('/users/<int:user_id>', methods=['DELETE'])
 def api_delete_user(user_id):
     delete_user(user_id)
-    return jsonify({"message": "User has been deleted"}), 200
+    return jsonify({"errCode":0,"message": "User has been deleted"}), 200
 
 @app.route('/login',  methods=['POST'])
 def api_login():
@@ -437,18 +437,16 @@ def api_get_payment_by_id(payment_id):
     else:
         return jsonify({"error": "Payment not found"}), 404
 
-@app.route('/payments/<int:payment_id>', methods=['PUT'])
-def api_update_payment(payment_id):
-    data = request.form
-    amount = data.get('Amount')
-    payment_method = data.get('PaymentMethod')
-    payment_status = data.get('PaymentStatus')
+@app.route('/payments/<int:booking_id>', methods=['PUT'])
+def api_update_payment_status(booking_id):
+    try:
+        # Gọi hàm update_payment_status với BookingID
+        update_payment_status(booking_id)
+        return jsonify({"errCode": 0, "message": "Payment status successfully updated"}), 200
+    except Exception as e:
+        return jsonify({"error": f"Failed to update payment status: {str(e)}"}), 500
 
-    if amount is None and payment_method is None and payment_status is None:
-        return jsonify({"error": "No information to update"}), 400
 
-    update_payment(payment_id, amount=amount, payment_method=payment_method, payment_status=payment_status)
-    return jsonify({"message": "Payment successfully updated"}), 200
 
 @app.route('/payments/<int:payment_id>', methods=['DELETE'])
 def api_delete_payment(payment_id):

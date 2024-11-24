@@ -13,37 +13,65 @@ const GetAllRooms = () => {
 			console.error(error);
 		});
 };
+const GetPaymentID = (id_booking) => {
+	return axios
+		.get(`/payments/${id_booking}`, {
+			headers: {
+				"Content-Type": "application/x-www-form-urlencoded",
+			},
+		})
+		.then((response) => {
+			return response;
+		})
+		.catch((error) => {
+			console.error(error);
+		});
+};
 const CreateRoom = (form) => {
-    // Tạo một đối tượng FormData để gửi dữ liệu
-    const formData = new FormData();
-    
-    // Thêm các trường thông tin phòng vào FormData
-    formData.append("idRoom", form.idRoom);
-    formData.append("roomType", form.roomType);
-    formData.append("price", form.price);
-    formData.append("features", form.features);
-    
-    // Thêm ảnh duy nhất vào FormData
-    if (form.pictures.length > 0) {
-      formData.append("picture", form.pictures[0]); // Chỉ thêm tệp đầu tiên
-    }
-    
-    return axios
-      .post("/create_room", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data", // Cập nhật header để gửi file
-        },
-      })
-      .then((response) => {
-        return response;
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  };
+	// Tạo một đối tượng FormData để gửi dữ liệu
+	const formData = new FormData();
+
+	// Thêm các trường thông tin phòng vào FormData
+	formData.append("idRoom", form.idRoom);
+	formData.append("roomType", form.roomType);
+	formData.append("price", form.price);
+	formData.append("features", form.features);
+
+	// Thêm ảnh duy nhất vào FormData
+	if (form.pictures.length > 0) {
+		formData.append("picture", form.pictures[0]); // Chỉ thêm tệp đầu tiên
+	}
+
+	return axios
+		.post("/create_room", formData, {
+			headers: {
+				"Content-Type": "multipart/form-data", // Cập nhật header để gửi file
+			},
+		})
+		.then((response) => {
+			return response;
+		})
+		.catch((error) => {
+			console.error(error);
+		});
+};
 const GetBookingID = (id) => {
 	return axios
 		.get(`/bookings/${id}`, {
+			headers: {
+				"Content-Type": "application/x-www-form-urlencoded",
+			},
+		})
+		.then((response) => {
+			return response;
+		})
+		.catch((error) => {
+			console.error(error);
+		});
+};
+const GetAllBookings = () => {
+	return axios
+		.get("/bookings", {
 			headers: {
 				"Content-Type": "application/x-www-form-urlencoded",
 			},
@@ -111,6 +139,21 @@ const CreatePayment = (form) => {
 			console.error(error);
 		});
 };
+const UpdatePayment = (booking_id) => {
+	return axios
+		.put(`/payments/${booking_id}`, {
+			headers: {
+				"Content-Type": "application/x-www-form-urlencoded",
+			},
+		})
+		.then((response) => {
+			return response;
+		})
+		.catch((error) => {
+			console.error(error);
+		});
+};
+
 const CheckPayment = async (apptransid) => {
 	return axios.post(
 		"/payment/CheckZaloPay",
@@ -139,6 +182,9 @@ const ChangeRoomAva = async (form) => {
 export {
 	GetAllRooms,
 	CreateRoom,
+	GetAllBookings,
+	UpdatePayment,
+	GetPaymentID,
 	GetBookingID,
 	DeleteBookings,
 	CreateBooking,
@@ -147,5 +193,4 @@ export {
 	PaymentZaloPay,
 	DeletePayments,
 	ChangeRoomAva,
-	
 };
