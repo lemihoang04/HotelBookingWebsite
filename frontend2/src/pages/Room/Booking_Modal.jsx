@@ -109,6 +109,7 @@ const Booking_Modal = (props) => {
 				</Modal.Body>
 				<NavDropdown.Divider />
 				<Modal.Body>
+				<label><h4>Payment Method</h4></label>
 					<div className="Check_box">
 						<div className="check mb-2">
 							<input

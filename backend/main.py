@@ -14,6 +14,7 @@ import hmac
 import json
 import requests
 import time
+from datetime import datetime
 app = Flask(__name__)
 app.secret_key = 'hotel'
 CORS(app, origins="http://localhost:3000", supports_credentials=True)
@@ -278,6 +279,23 @@ def api_create_room():
 def api_get_all_rooms():
     rooms = get_all_room()
     return jsonify(rooms), 200
+
+@app.route('/update_room_status_by_booking', methods=['GET'])
+def update_room_status_by_booking():
+    rooms = get_all_room()
+    for room in rooms:
+        room_id = room['RoomID']
+        bookings = get_booking_by_id_room(room_id) 
+        all_bookings_expired = True
+        if bookings:
+            for booking in bookings:
+                check_out_date = datetime.strptime(booking['CheckOutDate'], '%Y-%m-%d')
+                if check_out_date >= datetime.now():
+                    all_bookings_expired = False
+                    break
+        if all_bookings_expired:
+                update_room(room_id, availability=0)
+    return jsonify({"errCode":0,"message": "Room status successfully updated"}), 200
 
 @app.route('/rooms/<int:room_id>', methods=['GET'])
 def api_get_room_by_id(room_id):

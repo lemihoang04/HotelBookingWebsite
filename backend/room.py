@@ -50,16 +50,16 @@ def update_room(room_id, room_type=None, price=None, availability=None, features
     values = []
 
     
-    if room_type:
+    if room_type is not None:
         updates.append("RoomType = %s")
         values.append(room_type)
-    if price:
+    if price is not None:
         updates.append("Price = %s")
         values.append(price)
-    if availability:
+    if availability is not None:
         updates.append("Availability = %s")
         values.append(availability)
-    if features:
+    if features is not None:
         updates.append("Features = %s")
         values.append(features)
 

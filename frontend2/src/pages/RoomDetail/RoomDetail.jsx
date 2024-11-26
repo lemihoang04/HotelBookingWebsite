@@ -126,7 +126,7 @@ const RoomDetail = () => {
 					<div className="row">
 						<div className="col-lg-8">
 							<div className="room-details-item">
-								<img src={room1} alt="Room Details" />
+								<img src={`http://127.0.0.1:5000/load/${roomData.Image}`} alt="Room Details" />
 								<div className="rd-text">
 									<div className="rd-title">
 										<h3>{roomData.RoomType}</h3>
@@ -147,23 +147,43 @@ const RoomDetail = () => {
 									<table>
 										<tbody>
 											<tr>
-												<td className="r-o">Size:</td>
-												<td>30 ft</td>
+												<td className="r-o"><strong>Room number:</strong></td>
+												<td>{roomData.RoomID}</td>
 											</tr>
 											<tr>
-												<td className="r-o">Capacity:</td>
-												<td>Max person 3</td>
+												<td className="r-o"><strong>Size:</strong></td>
+												<td>
+													{roomData.RoomType === "Family Room" && "45 ft"}
+													{roomData.RoomType === "Deluxe Room" && "35 ft"}
+													{roomData.RoomType === "Suite Room" && "50 ft"}
+													{roomData.RoomType === "Standard Room" && "25 ft"}
+												</td>
 											</tr>
 											<tr>
-												<td className="r-o">Bed:</td>
-												<td>King Beds</td>
+												<td className="r-o"><strong>Capacity:</strong></td>
+												<td>
+													{roomData.RoomType === "Family Room" && "Max person 5"}
+													{roomData.RoomType === "Deluxe Room" && "Max person 3"}
+													{roomData.RoomType === "Suite Room" && "Max person 4"}
+													{roomData.RoomType === "Standard Room" && "Max person 2"}
+												</td>
 											</tr>
 											<tr>
-												<td className="r-o">Services:</td>
+												<td className="r-o"><strong>Bed:</strong></td>
+												<td>
+													{roomData.RoomType === "Family Room" && "2 King Beds"}
+													{roomData.RoomType === "Deluxe Room" && "1 Queen Bed"}
+													{roomData.RoomType === "Suite Room" && "1 King Bed"}
+													{roomData.RoomType === "Standard Room" && "1 Double Bed"}
+												</td>
+											</tr>
+											<tr>
+												<td className="r-o"><strong>Features:</strong></td>
 												<td>{roomData.Features}</td>
 											</tr>
 										</tbody>
 									</table>
+
 									<p className="f-para">
 										Motorhome or Trailer that is the question for you. Here are
 										some of the advantages and disadvantages of both, so you

@@ -81,7 +81,7 @@ const Home = () => {
 										recommendations for international travel and for finding
 										low-priced hotel rooms.
 									</p>
-									<a href="#" class="primary-btn">
+									<a href="/about-us" class="primary-btn">
 										Discover Now
 									</a>
 								</div>
@@ -99,22 +99,17 @@ const Home = () => {
 								<div class="section-title">
 									<span>About Us</span>
 									<h2>
-										Intercontinental LA <br />
-										Westlake Hotel
+									InterContinental Da Nang<br />
+										Hotel
 									</h2>
 								</div>
 								<p class="f-para">
-									Sona.com is a leading online accommodation site. We’re
-									passionate about travel. Every day, we inspire and reach
-									millions of travelers across 90 local websites in 41
-									languages.
+								Sona.com is a top online platform for accommodations, driven by a passion for travel. Each day, we motivate and connect with millions of travelers through 90 localized websites available in 41 languages.
 								</p>
 								<p class="s-para">
-									So when it comes to booking the perfect hotel, vacation
-									rental, resort, apartment, guest house, or tree house, we’ve
-									got you covered.
+								So, whether you're booking the ideal hotel, vacation rental, resort, apartment, guest house, or even a tree house, we've got everything you need.
 								</p>
-								<a href="#" class="primary-btn about-btn">
+								<a href="/about-us" class="primary-btn about-btn">
 									Read More
 								</a>
 							</div>
@@ -208,83 +203,7 @@ const Home = () => {
 				<div class="container-fluid">
 					<div class="hp-room-items">
 						<div class="row">
-							<div class="col-lg-3 col-md-6">
-								<div
-									class="hp-room-item set-bg"
-									style={{
-										backgroundImage: `url(${require("../Home/img/room/room-b1.jpg")})`,
-									}}
-								>
-									<div class="hr-text">
-										<h3>Double Room</h3>
-										<h2>
-											199$<span>/Pernight</span>
-										</h2>
-										<table>
-											<tbody>
-												<tr>
-													<td class="r-o">Size:</td>
-													<td>30 ft</td>
-												</tr>
-												<tr>
-													<td class="r-o">Capacity:</td>
-													<td>Max persion 5</td>
-												</tr>
-												<tr>
-													<td class="r-o">Bed:</td>
-													<td>King Beds</td>
-												</tr>
-												<tr>
-													<td class="r-o">Services:</td>
-													<td>Wifi, Television, Bathroom,...</td>
-												</tr>
-											</tbody>
-										</table>
-										<a href="#" class="primary-btn">
-											More Details
-										</a>
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-3 col-md-6">
-								<div
-									class="hp-room-item set-bg"
-									style={{
-										backgroundImage: `url(${require("../Home/img/room/room-b2.jpg")})`,
-									}}
-								>
-									<div class="hr-text">
-										<h3>Premium King Room</h3>
-										<h2>
-											159$<span>/Pernight</span>
-										</h2>
-										<table>
-											<tbody>
-												<tr>
-													<td class="r-o">Size:</td>
-													<td>30 ft</td>
-												</tr>
-												<tr>
-													<td class="r-o">Capacity:</td>
-													<td>Max persion 5</td>
-												</tr>
-												<tr>
-													<td class="r-o">Bed:</td>
-													<td>King Beds</td>
-												</tr>
-												<tr>
-													<td class="r-o">Services:</td>
-													<td>Wifi, Television, Bathroom,...</td>
-												</tr>
-											</tbody>
-										</table>
-										<a href="#" class="primary-btn">
-											More Details
-										</a>
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-3 col-md-6">
+						<div class="col-lg-3 col-md-6">
 								<div
 									class="hp-room-item set-bg"
 									style={{
@@ -292,23 +211,23 @@ const Home = () => {
 									}}
 								>
 									<div class="hr-text">
-										<h3>Deluxe Room</h3>
+										<h3>Standard Room</h3>
 										<h2>
-											198$<span>/Pernight</span>
+											200$<span>/Pernight</span>
 										</h2>
 										<table>
 											<tbody>
 												<tr>
 													<td class="r-o">Size:</td>
-													<td>30 ft</td>
+													<td>25 ft</td>
 												</tr>
 												<tr>
 													<td class="r-o">Capacity:</td>
-													<td>Max persion 5</td>
+													<td>Max persion 2</td>
 												</tr>
 												<tr>
 													<td class="r-o">Bed:</td>
-													<td>King Beds</td>
+													<td>1 Double Bed</td>
 												</tr>
 												<tr>
 													<td class="r-o">Services:</td>
@@ -316,7 +235,7 @@ const Home = () => {
 												</tr>
 											</tbody>
 										</table>
-										<a href="#" class="primary-btn">
+										<a href="/rooms" class="primary-btn">
 											More Details
 										</a>
 									</div>
@@ -330,23 +249,23 @@ const Home = () => {
 									}}
 								>
 									<div class="hr-text">
-										<h3>Family Room</h3>
+										<h3>Deluxe Room</h3>
 										<h2>
-											299$<span>/Pernight</span>
+											400$<span>/Pernight</span>
 										</h2>
 										<table>
 											<tbody>
 												<tr>
 													<td class="r-o">Size:</td>
-													<td>30 ft</td>
+													<td>35 ft</td>
 												</tr>
 												<tr>
 													<td class="r-o">Capacity:</td>
-													<td>Max persion 5</td>
+													<td>Max persion 3</td>
 												</tr>
 												<tr>
 													<td class="r-o">Bed:</td>
-													<td>King Beds</td>
+													<td>1 Queen Bed</td>
 												</tr>
 												<tr>
 													<td class="r-o">Services:</td>
@@ -354,12 +273,89 @@ const Home = () => {
 												</tr>
 											</tbody>
 										</table>
-										<a href="#" class="primary-btn">
+										<a href="/rooms" class="primary-btn">
 											More Details
 										</a>
 									</div>
 								</div>
 							</div>
+							<div class="col-lg-3 col-md-6">
+								<div
+									class="hp-room-item set-bg"
+									style={{
+										backgroundImage: `url(${require("../Home/img/room/room-b1.jpg")})`,
+									}}
+								>
+									<div class="hr-text">
+										<h3>Suite Room</h3>
+										<h2>
+											500$<span>/Pernight</span>
+										</h2>
+										<table>
+											<tbody>
+												<tr>
+													<td class="r-o">Size:</td>
+													<td>50 ft</td>
+												</tr>
+												<tr>
+													<td class="r-o">Capacity:</td>
+													<td>Max persion 4</td>
+												</tr>
+												<tr>
+													<td class="r-o">Bed:</td>
+													<td>1 King Bed</td>
+												</tr>
+												<tr>
+													<td class="r-o">Services:</td>
+													<td>Wifi, Television, Bathroom,...</td>
+												</tr>
+											</tbody>
+										</table>
+										<a href="/rooms" class="primary-btn">
+											More Details
+										</a>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-3 col-md-6">
+								<div
+									class="hp-room-item set-bg"
+									style={{
+										backgroundImage: `url(${require("../Home/img/room/room-b2.jpg")})`,
+									}}
+								>
+									<div class="hr-text">
+										<h3>Family Room</h3>
+										<h2>
+											500$<span>/Pernight</span>
+										</h2>
+										<table>
+											<tbody>
+												<tr>
+													<td class="r-o">Size:</td>
+													<td>45 ft</td>
+												</tr>
+												<tr>
+													<td class="r-o">Capacity:</td>
+													<td>Max persion 5</td>
+												</tr>
+												<tr>
+													<td class="r-o">Bed:</td>
+													<td>2 King Beds</td>
+												</tr>
+												<tr>
+													<td class="r-o">Services:</td>
+													<td>Wifi, Television, Bathroom,...</td>
+												</tr>
+											</tbody>
+										</table>
+										<a href="/rooms" class="primary-btn">
+											More Details
+										</a>
+									</div>
+								</div>
+							</div>
+							
 						</div>
 					</div>
 				</div>

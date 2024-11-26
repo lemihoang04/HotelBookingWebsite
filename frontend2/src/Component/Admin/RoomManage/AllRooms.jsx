@@ -5,6 +5,7 @@ import EditRoomModal from "./RoomEditModal";
 import {
 	ChangeRoomAva,
 	GetAllRooms,
+	UpdateRoomStatusByBooking,
 	DeleteRooms,
 	GetBookingID_room,
 } from "../../../services/apiService";
@@ -89,18 +90,32 @@ const AllRooms = () => {
 		// );
 		// setSelectedRoom(null);
 	};
+	const handleUpdateRoomStatusClick = async () => {
+		let res = await UpdateRoomStatusByBooking();
+		if (res && res.errCode === 0) {
+			toast.success(res.message);
+			setShowEditModal(false);
+			fetchRooms();
+		}
+	};
 
 	const toggleDeleteModal = () => setShowDeleteModal(!showDeleteModal);
 	const toggleEditModal = () => setShowEditModal(!showEditModal);
 
 	const indexOfLastItem = currentPage * itemsPerPage;
 	const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-	const currentBookings = rooms.slice(indexOfFirstItem, indexOfLastItem);
+	const currentRooms = rooms.slice(indexOfFirstItem, indexOfLastItem);
 	const totalPages = Math.ceil(rooms.length / itemsPerPage);
 
 	return (
 		<div className="container mt-4 mx-3" style={{ width: "1000px" }}>
 			<h2 className="mb-4 p-2 border-bottom">Manage Rooms</h2>
+			<button
+				className="btn btn-success mb-2"
+				onClick={() => handleUpdateRoomStatusClick()}
+			>
+				Update Room Status
+			</button>
 			<table className="table table-bordered table-striped rounded">
 				<thead className="thead-dark">
 					<tr>
@@ -139,7 +154,7 @@ const AllRooms = () => {
 				</thead>
 				<tbody>
 					{rooms.length > 0 ? (
-						rooms.map((room) => (
+						currentRooms.map((room) => (
 							<tr key={room.RoomID}>
 								<td>{room.RoomID}</td>
 								<td>{room.RoomType}</td>

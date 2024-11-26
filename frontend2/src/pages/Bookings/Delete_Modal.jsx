@@ -20,7 +20,7 @@ const DeleteConfirmModal = ({ toggle, isOpen, booking, onConfirm }) => {
 				<Button
 					variant="danger"
 					onClick={() => {
-						onConfirm(booking.BookingID);
+						onConfirm(booking);
 						toggle();
 					}}
 				>

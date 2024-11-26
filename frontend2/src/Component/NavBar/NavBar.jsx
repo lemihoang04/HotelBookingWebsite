@@ -59,9 +59,7 @@ const NavBar = () => {
 											</li>
 
 											{user &&
-											user.isAuthenticated === false &&
-											admin &&
-											admin.isAuthenticated === false ? (
+											user.isAuthenticated === false  ? (
 												<li className="mx-1">
 													<NavLink to="/login" activeClassName="active">
 														Login
@@ -69,7 +67,7 @@ const NavBar = () => {
 												</li>
 											) : (
 												<NavDropdown
-													title={`Welcome, ${user.account.Name || "Admin"}`}
+													title={`Welcome, ${user.account.Name}`}
 													className="NavDropdown mt-1 menu-item-dropdown"
 													id="basic-nav-dropdown"
 												>

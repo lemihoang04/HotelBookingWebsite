@@ -34,6 +34,7 @@ const AllBooking = () => {
 						return {
 							...booking,
 							UserName: userResponse?.Name || "Unknown",
+							Phone: userResponse?.Phone || "Unknown",
 							PaymentStatus: payment.PaymentStatus || "Unknown",
 							Availability: "0",
 						};
@@ -131,6 +132,7 @@ const AllBooking = () => {
 						</th>
 						{[
 							{ key: "UserName", label: "User Name" },
+							{ key: "Phone", label: "Phone" },
 							{ key: "RoomID", label: "Room ID" },
 							{ key: "CheckInDate", label: "Check-In Date" },
 							{ key: "CheckOutDate", label: "Check-Out Date" },
@@ -156,6 +158,7 @@ const AllBooking = () => {
 							<tr key={booking.BookingID}>
 								<td>{booking.BookingID}</td>
 								<td>{booking.UserName}</td>
+								<td>{booking.Phone}</td>
 								<td>{booking.RoomID}</td>
 								<td>{booking.CheckInDate}</td>
 								<td>{booking.CheckOutDate}</td>

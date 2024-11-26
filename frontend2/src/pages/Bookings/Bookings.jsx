@@ -49,7 +49,7 @@ const Bookings = () => {
 				setBookings(updatedBookings);
 			} else {
 				console.error("Error fetching bookings:", response);
-				toast.error("Failed to fetch bookings.");
+				toast.error(response.error);
 			}
 		} catch (error) {
 			console.error("Error in fetchBooking:", error);
@@ -66,9 +66,9 @@ const Bookings = () => {
 		setShowModal(true);
 	};
 
-	const handleConfirmDelete = async (booking_id) => {
-		let res = await DeletePayments(booking_id);
-		let response = await DeleteBookings(booking_id);
+	const handleConfirmDelete = async (booking) => {
+		let res = await DeletePayments(booking.BookingID);
+		let response = await DeleteBookings(booking.BookingID);
 		const updatedFormValue = {
 			...dataValue,
 			Availability: "0",
@@ -90,7 +90,13 @@ const Bookings = () => {
 	const toggleModal = () => {
 		setShowModal(!showModal);
 	};
+	const [currentPage, setCurrentPage] = useState(1);
+	const [itemsPerPage] = useState(5);
 
+	const indexOfLastItem = currentPage * itemsPerPage;
+	const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+	const currentBookings = bookings.slice(indexOfFirstItem, indexOfLastItem);
+	const totalPages = Math.ceil(bookings.length / itemsPerPage);
 	return (
 		<div className="container mt-4">
 			<h2 className="mb-4">My Booking</h2>
@@ -110,8 +116,8 @@ const Bookings = () => {
 					</tr>
 				</thead>
 				<tbody>
-					{bookings.length > 0 ? (
-						bookings.map((booking, index) => (
+					{currentBookings.length > 0 ? (
+						currentBookings.map((booking, index) => (
 							<tr key={booking.BookingID}>
 								<td>{index + 1}</td>
 								<td>{booking.Username}</td>
@@ -119,8 +125,24 @@ const Bookings = () => {
 								<td>{booking.CheckInDate}</td>
 								<td>{booking.CheckOutDate}</td>
 								<td>${booking.TotalPrice}</td>
-								<td>{booking.BookingStatus}</td>
-								<td>{booking.PaymentStatus}</td>
+								<td><span
+										className={`badge ${
+											booking.BookingStatus === "Confirmed"
+												? "bg-success text-white"
+												: "bg-warning text-white"
+										}`}
+									>
+										{booking.BookingStatus}
+									</span></td>
+								<td><span
+										className={`badge ${
+											booking.PaymentStatus === "Completed"
+												? "bg-success text-white"
+												: "bg-warning text-white"
+										}`}
+									>
+										{booking.PaymentStatus}
+									</span></td>
 								<td>{booking.Timestamp}</td>
 								<td>
 									<button
@@ -141,32 +163,34 @@ const Bookings = () => {
 					)}
 				</tbody>
 			</table>
-			<nav aria-label="Pagination">
+			<nav>
 				<ul className="pagination justify-content-end">
-					<li className="page-item disabled">
-						<a className="page-link" href="#" tabIndex="-1">
-							Previous
-						</a>
+					<li
+						className={`page-item ${currentPage === 1 ? "disabled" : ""}`}
+						onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+					>
+						<button className="page-link">Previous</button>
 					</li>
-					<li className="page-item">
-						<a className="page-link" href="#">
-							1
-						</a>
-					</li>
-					<li className="page-item active">
-						<a className="page-link" href="#">
-							2 <span className="sr-only">(current)</span>
-						</a>
-					</li>
-					<li className="page-item">
-						<a className="page-link" href="#">
-							3
-						</a>
-					</li>
-					<li className="page-item">
-						<a className="page-link" href="#">
-							Next
-						</a>
+					{Array.from({ length: totalPages }, (_, index) => (
+						<li
+							key={index + 1}
+							className={`page-item ${
+								currentPage === index + 1 ? "active" : ""
+							}`}
+							onClick={() => setCurrentPage(index + 1)}
+						>
+							<button className="page-link">{index + 1}</button>
+						</li>
+					))}
+					<li
+						className={`page-item ${
+							currentPage === totalPages ? "disabled" : ""
+						}`}
+						onClick={() =>
+							setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+						}
+					>
+						<button className="page-link">Next</button>
 					</li>
 				</ul>
 			</nav>

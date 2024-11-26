@@ -13,6 +13,20 @@ const GetAllRooms = () => {
 			console.error(error);
 		});
 };
+const UpdateRoomStatusByBooking = () => {
+	return axios
+		.get("/update_room_status_by_booking", {
+			headers: {
+				"Content-Type": "application/x-www-form-urlencoded",
+			},
+		})
+		.then((response) => {
+			return response;
+		})
+		.catch((error) => {
+			console.error(error);
+		});
+};
 const GetPaymentID = (id_booking) => {
 	return axios
 		.get(`/payments/${id_booking}`, {
@@ -202,6 +216,7 @@ const DeleteRooms = async (id_rooms) => {
 };
 export {
 	GetAllRooms,
+	UpdateRoomStatusByBooking,
 	CreateRoom,
 	GetAllBookings,
 	UpdatePayment,
