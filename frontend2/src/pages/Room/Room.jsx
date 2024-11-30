@@ -71,20 +71,22 @@ const Room = () => {
       <div className="container my-4">
         <div className="row">
           <div className="col-lg-4">
-		  <label htmlFor="roomTypeDropdown" className="form-label">
+            <label htmlFor="roomTypeDropdown" className="form-label">
               Room Type
             </label>
             <select
               className="form-select"
               value={selectedRoomType}
-              onChange={(e) => setSelectedRoomType(e.target.value)}
+              onChange={(e) => {
+                setSelectedRoomType(e.target.value);
+                setCurrentPage(1); 
+              }}
             >
               <option value="">All Room Types</option>
               <option value="Standard Room">Standard Room</option>
               <option value="Suite Room">Suite Room</option>
               <option value="Deluxe Room">Deluxe Room</option>
-			  <option value="Family Room">Family Room</option>
-              {/* Add more options as needed */}
+              <option value="Family Room">Family Room</option>
             </select>
           </div>
         </div>
@@ -142,6 +144,14 @@ const Room = () => {
           <div className="col-lg-12">
             <nav aria-label="Room page navigation">
               <ul className="pagination justify-content-center">
+                <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
+                  <button
+                    className="page-link"
+                    onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                  >
+                    Previous
+                  </button>
+                </li>
                 {[...Array(totalPages)].map((_, pageIndex) => (
                   <li
                     className={`page-item ${currentPage === pageIndex + 1 ? "active" : ""}`}
@@ -155,6 +165,15 @@ const Room = () => {
                     </button>
                   </li>
                 ))}
+
+                <li className={`page-item ${currentPage === totalPages ? "disabled" : ""}`}>
+                  <button
+                    className="page-link"
+                    onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                  >
+                    Next
+                  </button>
+                </li>
               </ul>
             </nav>
           </div>

@@ -5,6 +5,13 @@
 	font-family: 'Poppins', sans-serif;
 }
 
+.login-page .noshadow {
+
+	/* Hoặc chọn màu khác */
+	box-shadow: none !important;
+	/* Loại bỏ hiệu ứng viền */
+}
+
 .login-page .wrapper {
 	background: #ececec;
 	padding: 20px;

@@ -86,7 +86,7 @@ const Login_Admin = () => {
 											type="text"
 											className={
 												objValidInput.isValidLogin
-													? "form-control input"
+													? "form-control noshadow input"
 													: "is-invalid form-control input"
 											}
 											id="Email"
@@ -103,7 +103,7 @@ const Login_Admin = () => {
 											type="password"
 											className={
 												objValidInput.isValidPass
-													? "form-control input"
+													? "form-control noshadow input"
 													: "is-invalid form-control input"
 											}
 											name="Password"

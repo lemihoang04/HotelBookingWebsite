@@ -97,7 +97,7 @@ const Login = () => {
 											type="text"
 											className={
 												objValidInput.isValidLogin
-													? "form-control input"
+													? "form-control noshadow input"
 													: "is-invalid form-control input"
 											}
 											id="Email"
@@ -114,7 +114,7 @@ const Login = () => {
 											type="password"
 											className={
 												objValidInput.isValidPass
-													? "form-control input"
+													? "form-control input noshadow"
 													: "is-invalid form-control input"
 											}
 											name="Password"

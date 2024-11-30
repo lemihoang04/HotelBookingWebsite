@@ -158,7 +158,7 @@ const RoomDetail = () => {
 										</div>
 									</div>
 									<h2>
-									${roomData.Price}<span>/Pernight</span>
+									${roomData.Price}<span>/Per night</span>
 									</h2>
 									<table>
 										<tbody>
