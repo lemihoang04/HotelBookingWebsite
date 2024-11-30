@@ -134,7 +134,7 @@ const Login = () => {
 								<div className="signin">
 									<span>
 										Already have an account?{" "}
-										<button onClick={handleCreateAccount}>Register here</button>
+										<a href="#" onClick={handleCreateAccount}>Register here</a>
 									</span>
 								</div>
 							</div>

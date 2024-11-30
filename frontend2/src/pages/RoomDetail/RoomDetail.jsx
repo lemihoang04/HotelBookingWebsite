@@ -14,7 +14,11 @@ import { ChangeRoomAva, CreatePayment } from "../../services/apiService";
 const RoomDetail = () => {
 	const { user, getformValue } = useContext(UserContext);
 	const [startDate, setStartDate] = useState(new Date());
-	const [endDate, setEndDate] = useState(new Date());
+	const [endDate, setEndDate] = useState(() => {
+		const tomorrow = new Date();
+		tomorrow.setDate(tomorrow.getDate() + 1); 
+		return tomorrow;
+	});
 	const [formValue, setFormValue] = useState({
 		UserID: user.account.UserID,
 		userName: user.account.Name,
@@ -38,10 +42,15 @@ const RoomDetail = () => {
 		setIsOpenModalBooking(!isOpenModalBooking);
 	};
 	const HandleBooking = () => {
+		const currentDate = new Date();
+		currentDate.setHours(0, 0, 0, 0);
 		if (user && user.isAuthenticated !== true) {
 			history.push("/login");
 		} else {
-			if (startDate >= endDate) {
+			if (startDate < currentDate ) {
+				toast.error("Start date cannot be earlier than today");
+			}
+			else if (startDate >= endDate) {
 				toast.error("Please select a valid date");
 			} else {
 				setIsOpenModalBooking(true);
@@ -122,14 +131,21 @@ const RoomDetail = () => {
 				</div>
 			</div>
 			<section className="room-details-section spad">
-				<div className="container">
+				<div className="container p-4">
+					<div className="row">
+						<div className="col-lg-12">
+						<h1 className="ml-2 mb-3">{roomData.RoomType}</h1>
+							<div className="room-details-item">
+								<img src={`http://127.0.0.1:5000/load/${roomData.Image}`} alt="Room Details" />
+							</div>
+						</div>
+					</div>
 					<div className="row">
 						<div className="col-lg-8">
 							<div className="room-details-item">
-								<img src={`http://127.0.0.1:5000/load/${roomData.Image}`} alt="Room Details" />
 								<div className="rd-text">
 									<div className="rd-title">
-										<h3>{roomData.RoomType}</h3>
+										<h3>Room Detail</h3>
 										<div className="rdt-right">
 											<div className="rating">
 												<i className="icon_star"></i>
@@ -142,7 +158,7 @@ const RoomDetail = () => {
 										</div>
 									</div>
 									<h2>
-										{roomData.Price}$<span>/Pernight</span>
+									${roomData.Price}<span>/Pernight</span>
 									</h2>
 									<table>
 										<tbody>
@@ -212,6 +228,7 @@ const RoomDetail = () => {
 								<h3>Your Reservation</h3>
 
 								<div className="form-group">
+									<p>Check-in time is 12:00 PM, checkout time is 11:59 AM. If you leave behind any items, please contact the receptionist.</p>
 									<label htmlFor="date-in">Check In:</label>
 									<div className="input-group">
 										<DatePicker
@@ -223,7 +240,7 @@ const RoomDetail = () => {
 											dateFormat="dd/MM/yyyy"
 											className="form-control"
 										/>
-										<div className="input-group-append">
+										<div className="input-group-append ">
 											<span className="input-group-text">
 												<i className="fas fa-calendar"></i>
 											</span>
@@ -236,7 +253,13 @@ const RoomDetail = () => {
 									<div className="input-group">
 										<DatePicker
 											selected={endDate}
-											onChange={(date) => setEndDate(date)}
+											onChange={(date) => {
+												if (date) {
+													const updatedDate = new Date(date);
+													updatedDate.setHours(0, 0, 0, 0); 
+													setEndDate(updatedDate);
+												}
+											}}
 											selectsEnd
 											startDate={endDate}
 											endDate={startDate}
@@ -250,9 +273,10 @@ const RoomDetail = () => {
 										</div>
 									</div>
 								</div>
-								<button className="btn btn-primary" onClick={HandleBooking}>
-									Check Now
-								</button>
+											
+									<button className="btn btn-primary w-100" onClick={HandleBooking}>
+										Check Now
+									</button>
 							</div>
 						</div>
 					</div>

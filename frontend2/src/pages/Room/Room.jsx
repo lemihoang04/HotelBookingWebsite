@@ -13,7 +13,9 @@ import { toast } from "react-toastify";
 const Room = () => {
   const history = useHistory();
   const [rooms, setRooms] = useState([]);
-  const [selectedRoomType, setSelectedRoomType] = useState(""); // Store selected room type
+  const [selectedRoomType, setSelectedRoomType] = useState(""); 
+  const [currentPage, setCurrentPage] = useState(1);
+  const roomsPerPage = 9;
 
   // Function to get data from the API
   const GetDataRooms = async () => {
@@ -42,6 +44,11 @@ const Room = () => {
     ? rooms.filter((room) => room.RoomType === selectedRoomType)
     : rooms;
 
+  const indexOfLastRoom = currentPage * roomsPerPage;
+  const indexOfFirstRoom = indexOfLastRoom - roomsPerPage;
+  const currentRooms = filteredRooms.slice(indexOfFirstRoom, indexOfLastRoom);
+
+  const totalPages = Math.ceil(filteredRooms.length / roomsPerPage);    
   return (
     <>
       <div className="breadcrumb-section">
@@ -87,8 +94,8 @@ const Room = () => {
       <section className="rooms-section spad">
         <div className="container">
           <div className="row">
-            {filteredRooms.length > 0 ? (
-              filteredRooms.map((item, index) => {
+            {currentRooms.length > 0 ? (
+              currentRooms.map((item, index) => {
                 const isBooked = item.Availability === 1;
                 return (
                   <div
@@ -103,7 +110,7 @@ const Room = () => {
                       {isBooked && <div className="booked-overlay">Booked</div>}
                       <div className="ri-text">
                         <h4>{item.RoomType}</h4>
-						<div><p>RoomID: {item.RoomID}</p></div>
+						<div><p>Room Number: {item.RoomID}</p></div>
                         <h3>
                           {item.Price}$<span>/Pernight</span>
                         </h3>
@@ -135,21 +142,19 @@ const Room = () => {
           <div className="col-lg-12">
             <nav aria-label="Room page navigation">
               <ul className="pagination justify-content-center">
-                <li className="page-item">
-                  <a className="page-link" href="#">
-                    1
-                  </a>
-                </li>
-                <li className="page-item">
-                  <a className="page-link" href="#">
-                    2
-                  </a>
-                </li>
-                <li className="page-item">
-                  <a className="page-link" href="#">
-                    Next <i className="fa fa-long-arrow-right"></i>
-                  </a>
-                </li>
+                {[...Array(totalPages)].map((_, pageIndex) => (
+                  <li
+                    className={`page-item ${currentPage === pageIndex + 1 ? "active" : ""}`}
+                    key={pageIndex}
+                  >
+                    <button
+                      className="page-link"
+                      onClick={() => setCurrentPage(pageIndex + 1)}
+                    >
+                      {pageIndex + 1}
+                    </button>
+                  </li>
+                ))}
               </ul>
             </nav>
           </div>
